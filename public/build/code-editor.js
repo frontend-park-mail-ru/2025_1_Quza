@@ -1,0 +1,1 @@
+(()=>{var e=Handlebars.template;(Handlebars.templates=Handlebars.templates||{})["code-editor.hbs"]=e({compiler:[8,">= 4.3.0"],main:function(e,a,r,t,d){return'<div id="code-editor">\r\n\r\n</div>'},useData:!0})})();

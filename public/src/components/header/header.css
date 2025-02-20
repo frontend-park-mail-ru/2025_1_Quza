@@ -1,0 +1,31 @@
+header {
+    width: 100%;
+    padding: 10px 25px;
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+header .logo-container a{
+    color: #000;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+header .right-container {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+header .menu-container {
+    display: flex;
+    gap: 20px;
+}
+
+header .menu-container .menu-item a {
+    text-decoration: none;
+}

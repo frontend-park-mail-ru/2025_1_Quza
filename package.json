@@ -1,0 +1,23 @@
+{
+  "name": "2025_1_quza",
+  "version": "1.0.0",
+  "description": "Репозиторий команды \"Quza\". Проект: Colab",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frontend-park-mail-ru/2025_1_Quza.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/frontend-park-mail-ru/2025_1_Quza/issues"
+  },
+  "homepage": "https://github.com/frontend-park-mail-ru/2025_1_Quza#readme",
+  "dependencies": {
+    "ws": "^8.18.0"
+  }
+}

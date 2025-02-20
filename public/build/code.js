@@ -1,0 +1,1 @@
+(()=>{var e=Handlebars.template;(Handlebars.templates=Handlebars.templates||{})["code.hbs"]=e({compiler:[8,">= 4.3.0"],main:function(e,a,n,r,t){return'<div class="code-container">\r\n\t<h3>filename</h3>\r\n\t<p>code source</p>\r\n</div>'},useData:!0})})();

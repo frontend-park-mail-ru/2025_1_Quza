@@ -1,4 +1,5 @@
 import {Code} from "../code/code.js";
+import "../../../build/codes.js"
 
 export class CodesContainer {
     #parent;

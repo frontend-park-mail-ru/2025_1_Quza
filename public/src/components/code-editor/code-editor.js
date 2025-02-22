@@ -1,3 +1,5 @@
+import "../../../build/code-editor.js"
+
 export class CodeEditor{
     #parent;
 

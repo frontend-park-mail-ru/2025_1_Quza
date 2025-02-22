@@ -1,3 +1,7 @@
+import "../../../build/home.js"
+import {router} from "../../modules/router.js";
+import {Button} from "../button/button.js";
+
 export class Home {
     #parent;
     #config;
@@ -7,10 +11,22 @@ export class Home {
         this.#config = config;
     }
 
+    get self () {
+        return document.getElementById('home');
+    }
+
+    handleButtonClick = () => {
+        router.redirect("/login")
+    }
+
     render() {
-        const tmp = document.createElement('div');
-        const template = Handlebars.templates["home.hbs"];
-        tmp.innerHTML = template(this.#config);
-        this.#parent.appendChild(tmp.firstElementChild);
+        this.#parent.insertAdjacentHTML(
+            'afterbegin',
+            window.Handlebars.templates['home.hbs'](this.#config)
+        );
+
+        const link = new Button(document.querySelector(".first"), this.#config.linkToLogin, this.handleButtonClick)
+        link.render()
+
     }
 }

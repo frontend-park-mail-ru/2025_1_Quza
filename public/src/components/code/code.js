@@ -1,3 +1,5 @@
+import "../../../build/code.js"
+
 export class Code {
     #parent;
 

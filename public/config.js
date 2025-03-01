@@ -1,44 +1,57 @@
-const mainPage = {
-    id: "main-page",
+const homePage = {
+    id: "home",
     href: "/",
+    linkToLoginPage: {
+        text: "Попробовать"
+    }
+}
+
+const codesPage = {
+    id: "codes-page",
+    href: "/codes",
     needAuth: true,
-    home: {
-        id: "home",
-        linkToLogin: {
-            text: "Попробовать"
+    searchBar: {
+        id: "codes-search-bar",
+    },
+    codeEditor: {
+        id: "code-editor",
+        closeBtn: {
+            id: "close-editor-btn",
+            src: "/src/assets/close.png"
         }
     }
 }
 
 const header = {
-    name: "Colab",
+    name: "YouCode",
     logo: {
-        href: "/",
-        text: "Colab"
+        id: "logo",
+        img: {
+            id: "logo-icon",
+            src: "/src/assets/logo.png"
+        }
     },
-    avatarLink: {
-        href: "/profile"
-    },
-    avatar: {
-        id: "user-avatar"
+    settings: {
+        id: "settings-wrapper",
+        panel: {
+            id: "popup-content",
+            avatar: {
+                id: "user-avatar"
+            },
+            username: {
+                class: "username"
+            },
+            logoutBtn: {
+                id: "logout-btn",
+                text: "Выйти"
+            }
+        }
     },
     menu: {
-        home: {
-            href: "/",
-            text: "Главная"
-        },
-        main: {
-            href: "/",
-            text: "Программы"
-        },
         auth: {
             id: "link-to-login",
-            href: "/login",
+            href: "/auth",
             text: "Вход"
-        },
-        register: {
-            href: "/register",
-            text: "Регистрация"
         }
     }
 }
@@ -51,76 +64,65 @@ const wrapper = {
     id: "wrapper"
 }
 
-const profilePage = {
-    href: "/profile",
-    id: "profile-page",
-    logoutBtn: {
-        text: "Выйти"
-    }
-}
-
-const loginPage = {
-    id: "login-page",
-    href: "/login",
-    form: {
-        id: "login-form",
-        inputs: {
-            login: {
-                id: "login",
-                type: 'text',
-                placeholder: 'Введите логин'
+const authPage = {
+    id: "auth-page",
+    href: "/auth",
+    needAuth: false,
+    forms: {
+        login: {
+            id: "login-form",
+            inputs: {
+                login: {
+                    type: 'text',
+                    icon: "/src/assets/user.png",
+                    placeholder: 'Введите логин'
+                },
+                password: {
+                    type: "password",
+                    icon: "/src/assets/password.png",
+                    placeholder: "Введите пароль"
+                }
             },
-            password: {
-                id: "password",
-                type: "password",
-                placeholder: "Придумайте пароль"
+            buttons: {
+                submitBtn: {
+                    text: "Войти"
+                }
             }
         },
-        links: {
-            registerPage: {
-                href: "/register",
-                text: "Ещё не зарегистрированы?",
-            }
-        },
-        buttons: {
-            submitBtn: {
-                text: "Войти"
-            }
-        }
-    }
-}
-
-const registerPage = {
-    href: "/register",
-    id: "register-page",
-    form: {
-        id: "register-form",
-        inputs: {
-            login: {
-                type: "text",
-                placeholder: "Введите логин"
+        register: {
+            id: "register-form",
+            inputs: {
+                login: {
+                    type: "text",
+                    icon: "/src/assets/user.png",
+                    placeholder: "Придумайте логин"
+                },
+                password: {
+                    type: "password",
+                    icon: "/src/assets/password.png",
+                    placeholder: "Придумайте пароль"
+                },
+                repeatPassword: {
+                    type: "password",
+                    icon: "/src/assets/password.png",
+                    placeholder: "Повторите пароль"
+                }
             },
-            password: {
-                type: "password",
-                placeholder: "Введите пароль"
-            },
-            repeatPassword: {
-                type: "password",
-                placeholder: "Повторите пароль"
-            }
-        },
-        links: {
-            loginPage: {
-                href: "/login",
-                text: "Уже есть аккаунт?",
-            }
-        },
-        buttons: {
-            submitBtn: {
-                text: "Зарегистрироваться"
+            buttons: {
+                submitBtn: {
+                    text: "Зарегистрироваться"
+                }
             }
         }
     },
+    links: {
+        linkToLogin: {
+            text: "Войти"
+        },
+        linkToRegister: {
+            text: "Регистрация"
+        }
+    }
 }
 
 const notFoundPage = {
@@ -136,10 +138,6 @@ const codes = {
 
 }
 
-const codeEditor = {
-
-}
-
 const code = {
 
 }
@@ -149,15 +147,12 @@ const avatar = {
 }
 
 export const config = {
-    isAuthorized: false,
-    mainPage: mainPage,
-    loginPage: loginPage,
-    registerPage: registerPage,
-    profilePage: profilePage,
+    homePage: homePage,
+    codesPage: codesPage,
+    authPage: authPage,
     notFoundPage: notFoundPage,
     header: header,
     codes: codes,
-    codeEditor: codeEditor,
     code: code,
     avatar: avatar,
     wrapper: wrapper,

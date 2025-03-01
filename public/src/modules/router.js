@@ -1,70 +1,97 @@
-import Main from "../pages/main/main.js";
-import LoginPage from "../pages/login/login.js";
-import RegisterPage from "../pages/register/register.js";
-import ProfilePage from "../pages/profile/profile.js";
-import {AppUserStore} from "../stores/user/userStore.js";
+import Home from "../pages/home/home.js";
 import NotFoundPage from "../pages/notFound/not-found.js";
+import CodesPage from "../pages/codes/codes.js";
+import {AppUserStore, UserActions} from "../stores/user/userStore.js";
+import {AppEventMaker} from "./eventMaker.js";
+import {AppDispatcher} from "./dispathcer.js";
+import {AuthPage} from "../pages/auth/auth.js";
+import {UserStoreEvents} from "../stores/user/events.js";
 
 class Router {
     #currentUrl;
     #currentPage;
     #pages;
 
+    /**
+     * Конструктор класса
+     */
     constructor() {
-        this.#currentUrl = this.parseUrl();
+        this.#currentUrl = window.location.pathname;
         this.#currentPage = undefined;
         this.#pages = new Map();
     }
 
+    /**
+     * Инициализирует основные страницы сайта
+     * @param root {HTMLElement} - родительский объект
+     * @param config {Object} - глобальный конфиг
+     */
     init(root, config){
-        const mainPage = new Main(root, config.mainPage)
-        this.registerPage(mainPage)
+        const homePage = new Home(root, config.homePage);
+        this.registerPage("/", homePage);
 
-        const loginPage = new LoginPage(root, config.loginPage)
-        this.registerPage(loginPage)
+        const codesPage = new CodesPage(root, config.codesPage);
+        this.registerPage("/codes", codesPage);
 
-        const registerPage = new RegisterPage(root, config.registerPage)
-        this.registerPage(registerPage)
+        const authPage = new AuthPage(root, config.authPage);
+        this.registerPage("/login", authPage);
+        this.registerPage("/register", authPage);
 
-        const profilePage = new ProfilePage(root, config.profilePage)
-        this.registerPage(profilePage)
+        const notFoundPage = new NotFoundPage(root, config.notFoundPage);
+        this.registerPage("/404", notFoundPage);
 
-        const notFoundPage = new NotFoundPage(root, config.notFoundPage)
-        this.registerPage(notFoundPage)
+        AppDispatcher.dispatch({type: UserActions.CHECK_USER});
 
-        this.redirect(this.#currentUrl)
+        AppEventMaker.subscribe(UserStoreEvents.SUCCESSFUL_LOGIN, () => {
+            if (this.#currentPage?.needAuth === false) {
+                this.redirect("/");
+            }
+        });
+
+        AppEventMaker.subscribe(UserStoreEvents.USER_CHECKED, () => {
+            if (this.#currentPage?.needAuth === true && !AppUserStore.IsAuthenticated()) {
+                this.redirect("/");
+            }
+        });
+
+        this.redirect(this.#currentUrl);
+
+        window.addEventListener("popstate", () => {
+            this.redirect(window.location.pathname);
+        });
     }
 
-    registerPage(page) {
-        this.#pages[page.href] = page
+    /**
+     * Регистрирует страницу
+     * @param href {string} адрес
+     * @param page {Page} объект страницы
+     */
+    registerPage(href, page) {
+        this.#pages[href] = page;
     }
 
+    /**
+     * Редиректит пользователя по переданному адресу
+     * @param href {string} адрес
+     */
     redirect(href) {
-        if (href === "") href = "/"
+        if (href === "") href = "/";
 
-        const page = this.#pages[href]
+        const page = this.#pages[href];
 
         if (page === undefined) {
-            this.redirect("/404")
+            this.redirect("/404");
             return;
         }
 
-        if (this.#currentPage !== page && page.href === href) {
-            if (page.needAuth && !AppUserStore.IsAuthenticated()) {
-                this.redirect("/")
-                return
-            }
+        this.#currentPage?.remove();
+        history.pushState({ href }, "", href);
 
-            this.#currentPage?.remove()
-            page.render()
-            this.#currentPage = page
-            history.pushState(null, null, page.href)
-        }
-    }
+        page.render();
+        this.#currentPage = page;
 
-    parseUrl() {
-        return  "/" + window.location.href.split("/").slice(-1)[0];
+        AppEventMaker.notify(UserActions.CHANGE_PAGE, href);
     }
 }
 
-export const router = new Router()
+export const router = new Router();

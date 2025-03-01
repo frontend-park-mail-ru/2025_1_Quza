@@ -1,15 +1,11 @@
 .submit-btn{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #56A6F0;
+    background-color: var(--primary-color);
     border-radius: 20px;
     padding: 8px 16px;
     border: none;
     outline: none;
-    color: #ffffff;
+    color: var(--white);
     text-align: center;
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     cursor: pointer;
     transition: 0.3s;
 }

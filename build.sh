@@ -1,24 +1,23 @@
 #!/bin/bash
-mkdir -p public/build
-handlebars -m public/src/pages/home/home.hbs -f public/build/home.js
-handlebars -m public/src/pages/notFound/not-found.hbs -f public/build/not-found.js
-handlebars -m public/src/pages/codes/codes.hbs -f public/build/codes.js
-handlebars -m public/src/pages/auth/auth.hbs -f public/build/auth.js
-handlebars -m public/src/pages/auth/login/login.hbs -f public/build/login.js
-handlebars -m public/src/pages/auth/register/register.hbs -f public/build/register.js
-handlebars -m public/src/components/image/image.hbs -f public/build/image.js
-handlebars -m public/src/components/header/header.hbs -f public/build/header.js
-handlebars -m public/src/components/code/code.hbs -f public/build/code.js
-handlebars -m public/src/components/code-editor/code-editor.hbs -f public/build/code-editor.js
-handlebars -m public/src/components/link/link.hbs -f public/build/link.js
-handlebars -m public/src/components/input/input.hbs -f public/build/input.js
-handlebars -m public/src/components/wrapper/wrapper.hbs -f public/build/wrapper.js
-handlebars -m public/src/components/button/button.hbs -f public/build/button.js
-handlebars -m public/src/components/settings-panel/settings-panel.hbs -f public/build/settings-panel.js
-handlebars -m public/src/components/settings-panel/settings-button/settings-button.hbs -f public/build/settings-button.js
-handlebars -m public/src/components/span/span.hbs -f public/build/span.js
-handlebars -m public/src/components/logo/logo.hbs -f public/build/logo.js
-handlebars -m public/src/components/empty-code/empty-code.hbs -f public/build/empty-code.js
-handlebars -m public/src/components/search-bar/search-bar.hbs -f public/build/search-bar.js
-handlebars -m public/src/components/toast/toast.hbs -f public/build/toast.js
 
+# Исходная и целевая директории
+SRC_DIR="public/src"
+BUILD_DIR="public/build"
+
+# Создаем целевую папку, если её нет
+mkdir -p "$BUILD_DIR"
+
+# Рекурсивно находим все .hbs файлы и компилируем их
+find "$SRC_DIR" -type f -name "*.hbs" | while read -r hbs_file; do
+    # Заменяем исходный путь и расширение для создания выходного файла
+    output_file="${hbs_file/$SRC_DIR/$BUILD_DIR}" # Меняем путь
+    output_file="${output_file%.hbs}.js"         # Меняем расширение .hbs → .js
+
+    # Создаем директорию, если она не существует
+    mkdir -p "$(dirname "$output_file")"
+
+    # Компилируем Handlebars-шаблон
+    npx handlebars -m "$hbs_file" -f "$output_file"
+
+    echo "✔ Compiled: $hbs_file → $output_file"
+done

@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/frontend-park-mail-ru/2025_1_Quza#readme",
   "dependencies": {
+    "handlebars": "^4.7.8",
     "ws": "^8.18.0"
   }
 }

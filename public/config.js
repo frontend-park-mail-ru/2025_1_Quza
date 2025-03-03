@@ -6,6 +6,22 @@ const homePage = {
     }
 }
 
+const codesPage1 = {
+    id: "codes-page1",
+    href: "/codes1",
+    needAuth: true,
+    searchBar: {
+        id: "codes-search-bar",
+    },
+    codeEditor: {
+        id: "code-editor",
+        closeBtn: {
+            id: "close-editor-btn",
+            src: "/src/assets/close.png"
+        }
+    }
+}
+
 const codesPage = {
     id: "codes-page",
     href: "/codes",
@@ -148,6 +164,7 @@ const avatar = {
 
 export const config = {
     homePage: homePage,
+    codesPage1: codesPage1,
     codesPage: codesPage,
     authPage: authPage,
     notFoundPage: notFoundPage,

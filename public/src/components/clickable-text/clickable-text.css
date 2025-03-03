@@ -1,0 +1,7 @@
+#clickable-text {
+    cursor: pointer;
+}
+  
+#clickable-text:hover {
+    color: darkblue;
+} 

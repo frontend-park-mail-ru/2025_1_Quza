@@ -4,6 +4,7 @@ import {UserStoreEvents} from "../../stores/user/events.js";
 import {AppUserStore} from "../../stores/user/userStore.js";
 import {router} from "../../modules/router.js";
 import {Button} from "../button/button.js";
+import {Clickabletext} from "../clickable-text/clickable-text.js";
 import {SettingsPanel} from "../settings-panel/settings-panel.js";
 import {Logo} from "../logo/logo.js";
 
@@ -18,6 +19,7 @@ export class Header {
     #authPageLink;
 
     #settingsPanel;
+    #clickabletext;
 
     /**
      * Конструктор класса
@@ -54,12 +56,25 @@ export class Header {
 
         AppEventMaker.subscribe(UserStoreEvents.CHANGE_PAGE, (href) => {
             console.log("CHANGE_PAGE");
+            console.log(href);
             if (href === "/") {
                 if (!AppUserStore.IsAuthenticated()) {
                     this.#authPageLink.self.classList.remove("hidden");
                 }
             } else {
                 this.#authPageLink.self.classList.add("hidden");
+            }
+            //чисто тест очистки содержимого кнопок хедера при изменении страницы (типо текст только по одной ссылке есть)
+            if (href === "/codes1") {
+                if (this.#clickabletext===undefined){
+                  this.#clickabletext = new Clickabletext(document.querySelector(".right-container1"), this.validateData,"cgfjkcjkjer");
+                  this.#clickabletext.render();
+                }
+            } else {
+                if (this.#clickabletext!==undefined){
+                    document.querySelector(".right-container1").removeChild(document.querySelector(".right-container1").querySelector(".clickable-text"))
+                    this.#clickabletext=undefined
+                }
             }
         });
 
@@ -93,6 +108,8 @@ export class Header {
             window.Handlebars.templates["header.hbs"](this.#config)
         );
 
+            //  this.#clickabletext = new Clickabletext(document.querySelector(".right-container1"), this.validateData);
+            //             this.#clickabletext.render();
         this.#logo = new Logo(document.querySelector(".logo-container"), this.#config.logo);
         this.#logo.render();
 

@@ -7,12 +7,14 @@ import {inputEvents} from "../../../components/input/events.js";
 import {AppDispatcher} from "../../../modules/dispathcer.js";
 import {UserActions} from "../../../stores/user/userStore.js";
 import {ValidateLogin, ValidatePassword} from "../../../shared/validation.js";
+import { Link } from "../../../components/link/link.js";
 
 export class RegisterForm {
     #parent;
     #config;
 
     #loginInput;
+    #LogLink;
     #passwordInput;
     #repeatPasswordInput;
     #submitBtn;
@@ -195,6 +197,13 @@ export class RegisterForm {
             "beforeend",
             window.Handlebars.templates["register.hbs"](this.#config)
         );
+
+        var LogLink = {
+            text:"Войти",
+            href:"/login",
+        }
+        this.#LogLink = new Link(this.self, LogLink);
+        this.#LogLink.render();
 
         this.#loginInput = new Input(this.self, this.#config.inputs.login);
         this.#loginInput.render();

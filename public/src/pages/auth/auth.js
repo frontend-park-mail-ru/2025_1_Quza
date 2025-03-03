@@ -17,6 +17,7 @@ export class AuthPage extends Page{
         this.self.querySelector(".form-container.sign-up").classList.remove("toggle-left");
         this.self.querySelector(".form-container.sign-up").classList.add("toggle-right");
         document.title = "Вход";
+        console.log(this.self.querySelector(".auth-container"))
 
         this.#loginForm = new LoginForm(this.self.querySelector(".sign-in"), this.config.forms.login);
         this.#loginForm.render();
@@ -32,23 +33,6 @@ export class AuthPage extends Page{
 
         this.#registerForm = new RegisterForm(this.self.querySelector(".sign-up"), this.config.forms.register);
         this.#registerForm.render();
-    };
-
-    /**
-     * Прячет форму регистрации и отображает форму входа
-     * Вызывается при нажатии на кнопку "Уже зарегистрированы?"
-     */
-    toggleLoginForm = () => {
-        this.self.classList.remove("active");
-        this.self.querySelector(".form-container.sign-up").classList.remove("fade-left");
-        this.self.querySelector(".form-container.sign-up").classList.add("fade-right");
-        history.pushState(null, null, "login");
-        document.title = "Вход";
-
-        if (this.#loginForm === undefined) {
-            this.#loginForm = new LoginForm(this.self.querySelector(".sign-in"), this.config.forms.login);
-            this.#loginForm.render();
-        }
     };
 
     /**
@@ -98,18 +82,15 @@ export class AuthPage extends Page{
      */
     render() {
         console.log("auth page render");
-
         this.parent.insertAdjacentHTML(
             "afterbegin",
             window.Handlebars.templates["auth.hbs"](this.config)
         );
-
-        this.isLoginPage() ? this.renderLoginForm() : this.renderRegisterForm();
-
-        const linkToLogin = new Button(this.self.querySelector(".toggle-panel.toggle-left"), this.config.links.linkToLogin, this.toggleLoginForm);
-        linkToLogin.render();
-
-        const linkToRegister = new Button(this.self.querySelector(".toggle-panel.toggle-right"), this.config.links.linkToRegister, this.toggleRegisterForm);
-        linkToRegister.render();
+        if (this.isLoginPage()){
+            this.#loginForm = new LoginForm(this.self.querySelector(".sign-in"), this.config.forms.login);
+        } else {
+            this.#loginForm = new RegisterForm(this.self.querySelector(".sign-in"), this.config.forms.register);
+        }
+        this.#loginForm.render();
     }
 }

@@ -7,12 +7,14 @@ import {UserStoreEvents} from "../../../stores/user/events.js";
 import {AppDispatcher} from "../../../modules/dispathcer.js";
 import {UserActions} from "../../../stores/user/userStore.js";
 import {ValidateLogin, ValidatePassword} from "../../../shared/validation.js";
+import { Link } from "../../../components/link/link.js";
 
 export class LoginForm {
     #parent;
     #config;
 
     #loginInput;
+    #RegLink;
     #passwordInput;
     #submitBtn;
 
@@ -147,6 +149,13 @@ export class LoginForm {
             "beforeend",
             window.Handlebars.templates["login.hbs"](this.#config)
         );
+
+        var RegLink = {
+            text:"Регистрация",
+            href:"/register",
+        }
+        this.#RegLink = new Link(this.self, RegLink);
+        this.#RegLink.render();
 
         this.#loginInput = new Input(this.self, this.#config.inputs.login);
         this.#loginInput.render();

@@ -1,6 +1,7 @@
 import Home from "../pages/home/home.js";
 import NotFoundPage from "../pages/notFound/not-found.js";
 import CodesPage from "../pages/codes/codes.js";
+import CodesPage1 from "../pages/codes1/codes1.js";
 import {AppUserStore, UserActions} from "../stores/user/userStore.js";
 import {AppEventMaker} from "./eventMaker.js";
 import {AppDispatcher} from "./dispathcer.js";
@@ -32,6 +33,9 @@ class Router {
 
         const codesPage = new CodesPage(root, config.codesPage);
         this.registerPage("/codes", codesPage);
+
+        const codesPage1 = new CodesPage1(root, config.codesPage1);
+        this.registerPage("/codes1", codesPage1);
 
         const authPage = new AuthPage(root, config.authPage);
         this.registerPage("/login", authPage);

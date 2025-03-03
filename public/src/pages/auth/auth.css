@@ -2,45 +2,39 @@
     width: 100%;
     height: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: right;
     align-items: center;
     background: #222226;
 }
 
+.probuct-info {
+    text-align: left; 
+    width: 100%;     
+    padding-left: 80px;
+    color: white;
+}
+
+.probuct-info h1 {
+    font-weight: bold;
+}
+
 .glassmorphism-container {
-    position: relative;
-}
-
-.glassmorphism-container::before, .glassmorphism-container::after {
-    width: 300px;
-    height: 300px;
     position: absolute;
-    border-radius: 50%;
-    content: '';
-}
-
-.glassmorphism-container:before {
-    background: linear-gradient(#9b22ea, #bf23f6);
-    top: -100px;
-    left: -100px;
-}
-
-.glassmorphism-container:after {
-    background: linear-gradient(#ff512f, #f09819);
-    bottom: -100px;
-    right: -100px;
+    bottom: 0;
+    left: 100;
+    justify-content: right;
 }
 
 .auth-container {
-    background: rgba(64, 64, 64, 0.15);
+    background: rgb(253, 252, 252);
     border: 2px solid rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(25px);
-    border-radius: 30px;
     box-shadow: 0 0px 15px rgba(0, 0, 0, 0.35);
     position: relative;
-    width: 768px;
+    justify-content: right;
+    width: 568px;
     max-width: 100%;
-    min-height: 500px;
+    min-height: 600px;
     animation-duration: 1s;
     animation-fill-mode: both;
     animation-name: fadeIn;
@@ -80,7 +74,7 @@
 #auth-page .auth-container .form-container form h3 {
     font-size: 28px;
     margin-bottom: 25px;
-    color: var(--white);
+    color: var(--black);
 }
 
 #auth-page .auth-container .form-container form button {
@@ -147,7 +141,7 @@
 
 #auth-page .auth-container .form-container.sign-in {
     left: 0;
-    width: 50%;
+    width: 100%;
     z-index: 2;
     opacity: 1;
 }
@@ -180,7 +174,7 @@
     position: absolute;
     top: 0;
     left: 50%;
-    width: 50%;
+    width: 0%;
     height: 100%;
     overflow: hidden;
     transition: all 0.6s ease-in-out;

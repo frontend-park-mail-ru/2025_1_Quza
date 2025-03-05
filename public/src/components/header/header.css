@@ -20,6 +20,46 @@ header .right-container {
     align-items: center;
 }
 
+header .right-container1 {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 30px;
+    left: 300px;
+}
+
+header .right-container2 {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 30px;
+    left: 400px;
+}
+
+header .right-container3 {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 30px;
+    left: 500px;
+}
+
+header .right-container4 {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 30px;
+    left: 600px;
+}
+
+header .right-container5 {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 30px;
+    left: 720px;
+}
+
 header .menu-container {
     display: flex;
     gap: 20px;

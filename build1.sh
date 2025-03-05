@@ -10,6 +10,7 @@ handlebars -m public/src/pages/auth/register/register.hbs -f public/build/regist
 handlebars -m public/src/components/image/image.hbs -f public/build/image.js
 handlebars -m public/src/components/header/header.hbs -f public/build/header.js
 handlebars -m public/src/components/header/header.hbs -f public/build/header.js
+handlebars -m public/src/components/text-container/text-container.hbs -f public/build/text-container.js
 handlebars -m public/src/components/code/code.hbs -f public/build/code.js
 handlebars -m public/src/components/clickable-text/clickable-text.hbs -f public/build/clickable-text.js
 handlebars -m public/src/components/code-editor/code-editor.hbs -f public/build/code-editor.js

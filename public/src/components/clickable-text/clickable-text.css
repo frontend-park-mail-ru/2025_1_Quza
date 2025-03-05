@@ -1,5 +1,6 @@
 #clickable-text {
     cursor: pointer;
+    color:aliceblue;
 }
   
 #clickable-text:hover {

@@ -6,6 +6,7 @@ import {AppCodesStore} from "../../stores/codes/codesStore.js";
 import {SearchBar} from "../../components/search-bar/search-bar.js";
 import {AppEventMaker} from "../../modules/eventMaker.js";
 import {CodesStoreEvents} from "../../stores/codes/events.js";
+import { router } from "../../modules/router.js";
 
 export default class CodesPage extends Page {
     #codesContainer;
@@ -76,9 +77,10 @@ export default class CodesPage extends Page {
      * @param code {HTMLElement}
      */
     selectCode = (code) => {
-        AppCodesStore.unselectCode();
-        AppCodesStore.fetchCode(code);
-        code.classList.add("selected");
+        router.redirect("/codes1");
+        // AppCodesStore.unselectCode();
+        // AppCodesStore.fetchCode(code);
+        // code.classList.add("selected");
     };
 
     /**

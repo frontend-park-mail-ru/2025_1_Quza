@@ -19,7 +19,11 @@ export class Header {
     #authPageLink;
 
     #settingsPanel;
-    #clickabletext;
+    #clickabletext1;
+    #clickabletext2;
+    #clickabletext3;
+    #clickabletext4;
+    #clickabletext5;
 
     /**
      * Конструктор класса
@@ -66,14 +70,46 @@ export class Header {
             }
             //чисто тест очистки содержимого кнопок хедера при изменении страницы (типо текст только по одной ссылке есть)
             if (href === "/codes1") {
-                if (this.#clickabletext===undefined){
-                  this.#clickabletext = new Clickabletext(document.querySelector(".right-container1"), this.validateData,"cgfjkcjkjer");
-                  this.#clickabletext.render();
+                if (this.#clickabletext1===undefined){
+                  this.#clickabletext1 = new Clickabletext(document.querySelector(".right-container1"), this.validateData,"+ Код");
+                  this.#clickabletext1.render();
                 }
+                if (this.#clickabletext2===undefined){
+                    this.#clickabletext2 = new Clickabletext(document.querySelector(".right-container2"), this.validateData,"+ Текст");
+                    this.#clickabletext2.render();
+                  }
+                  if (this.#clickabletext3===undefined){
+                    this.#clickabletext3 = new Clickabletext(document.querySelector(".right-container3"), this.validateData,"Скачать");
+                    this.#clickabletext3.render();
+                  }
+                  if (this.#clickabletext4===undefined){
+                    this.#clickabletext4 = new Clickabletext(document.querySelector(".right-container4"), this.validateData,"Поделиться");
+                    this.#clickabletext4.render();
+                  }
+                  if (this.#clickabletext5===undefined){
+                    this.#clickabletext5 = new Clickabletext(document.querySelector(".right-container5"), this.validateData,"Удалить");
+                    this.#clickabletext5.render();
+                  }
             } else {
-                if (this.#clickabletext!==undefined){
+                if (this.#clickabletext1!==undefined){
                     document.querySelector(".right-container1").removeChild(document.querySelector(".right-container1").querySelector(".clickable-text"))
-                    this.#clickabletext=undefined
+                    this.#clickabletext1=undefined
+                }
+                if (this.#clickabletext2!==undefined){
+                    document.querySelector(".right-container2").removeChild(document.querySelector(".right-container2").querySelector(".clickable-text"))
+                    this.#clickabletext2=undefined
+                }
+                if (this.#clickabletext3!==undefined){
+                    document.querySelector(".right-container3").removeChild(document.querySelector(".right-container3").querySelector(".clickable-text"))
+                    this.#clickabletext3=undefined
+                }
+                if (this.#clickabletext4!==undefined){
+                    document.querySelector(".right-container4").removeChild(document.querySelector(".right-container4").querySelector(".clickable-text"))
+                    this.#clickabletext4=undefined
+                }
+                if (this.#clickabletext5!==undefined){
+                    document.querySelector(".right-container5").removeChild(document.querySelector(".right-container5").querySelector(".clickable-text"))
+                    this.#clickabletext5=undefined
                 }
             }
         });

@@ -5,6 +5,7 @@
 @import './src/pages/codes1/codes1.css';
 @import './src/pages/home/home.css';
 @import './src/components/header/header.css';
+@import './src/components/text-container/text-container.css';
 @import './src/components/code/code.css';
 @import './src/components/code-editor/code-editor.css';
 @import './src/components/clickable-text/clickable-text.css';

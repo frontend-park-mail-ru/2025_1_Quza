@@ -7,6 +7,7 @@ import {SearchBar} from "../../components/search-bar/search-bar.js";
 import {AppEventMaker} from "../../modules/eventMaker.js";
 import {CodesStoreEvents} from "../../stores/codes/events.js";
 import { Clickabletext } from "../../components/clickable-text/clickable-text.js";
+import { TextContainer } from "../../components/text-container/text-container.js";
 
 export default class CodesPage1 extends Page {
     #codesContainer;
@@ -16,6 +17,7 @@ export default class CodesPage1 extends Page {
     #searchBar;
 
     #clickabletext;
+    #text;
 
     /**
      * Рендеринг списка блоков
@@ -29,14 +31,23 @@ export default class CodesPage1 extends Page {
         }
 
         if (codes.length > 0) {
-            for (const code of codes) {
+            //TODO: заменить на передачу с хранилищ моков (а то в 3 ночи спать хочется, а не этим заниматься)
+            let te1=new TextContainer(document.querySelector(".codes-container1"),{content:"text1"});
+            te1.render();
+            let te2=new TextContainer(document.querySelector(".codes-container1"),{content:"text2"});
+            te2.render();
+            let te3=new TextContainer(document.querySelector(".codes-container1"),{content:"text3"});
+            te3.render();
+            let te4=new TextContainer(document.querySelector(".codes-container1"),{content:"text4"});
+            te4.render();
+            /*for (const code of codes) {
                 console.log(code);
                 const codeClass = new Code(this.#codesContainer, code);
                 codeClass.render();
             }
 
             let hasVerticalScrollbar = this.#codesContainer.scrollHeight > this.#codesContainer.clientHeight;
-            hasVerticalScrollbar && this.createObserver();
+            hasVerticalScrollbar && this.createObserver();*/
 
         } else if (AppCodesStore.codes.length === 0) {
             const h3 = document.createElement("h1");
@@ -68,10 +79,10 @@ export default class CodesPage1 extends Page {
      */
     remove() {
         AppCodesStore.clean();
-        this.#searchBar.remove();
-        this.#codesEditor.remove();
+        //this.#searchBar.remove();
+        //this.#codesEditor.remove();
         this.#unsubscribeFromEvents();
-        super.remove();
+        //super.remove();
     }
 
     /**
@@ -108,28 +119,8 @@ export default class CodesPage1 extends Page {
         );
 
         this.#codesContainer = document.querySelector(".codes-container1");
-
-        this.#codesContainer.addEventListener("click", (e) => {
-            let id = undefined;
-
-            if (e.target.matches(".code-container1")) {
-                id = e.target.id;
-            } else if (e.target.matches(".code-container1 *")) {
-                id = e.target.parentNode.id;
-            }
-
-            if (id !== undefined) {
-                this.self.classList.add("selected");
-
-                this.selectCode(document.getElementById(id));
-            }
-        });
-
-        this.#searchBar = new SearchBar(this.self.querySelector("aside"), this.config.searchBar);
-        this.#searchBar.render();
-
-        this.#codesEditor = new CodeEditor(this.self, this.config.codeEditor);
-        this.#codesEditor.render();
+        this.#text=new TextContainer(document.querySelector(".codes-container1"),{content:"bfhjbmjhsbghdvhjn"})
+        this.#text.render();
 
         document.title = "Мои проекты";
         this.#subscribeToEvents();

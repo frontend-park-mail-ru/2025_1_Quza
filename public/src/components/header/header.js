@@ -7,6 +7,7 @@ import {Button} from "../button/button.js";
 import {Clickabletext} from "../clickable-text/clickable-text.js";
 import {SettingsPanel} from "../settings-panel/settings-panel.js";
 import {Logo} from "../logo/logo.js";
+import { AppCodesStore } from "../../stores/codes/codesStore.js";
 
 export class Header {
     #parent;
@@ -19,11 +20,15 @@ export class Header {
     #authPageLink;
 
     #settingsPanel;
+
     #clickabletext1;
     #clickabletext2;
     #clickabletext3;
     #clickabletext4;
     #clickabletext5;
+
+    #clickabletextFiles1;
+    #clickabletextFiles2;
 
     /**
      * Конструктор класса
@@ -71,11 +76,11 @@ export class Header {
             //чисто тест очистки содержимого кнопок хедера при изменении страницы (типо текст только по одной ссылке есть)
             if (href === "/codes1") {
                 if (this.#clickabletext1===undefined){
-                  this.#clickabletext1 = new Clickabletext(document.querySelector(".right-container1"), this.validateData,"+ Код");
+                  this.#clickabletext1 = new Clickabletext(document.querySelector(".right-container1"), "addBlock","+ Код",{data:"bkjvgcfd",projName:href.substring(1)});
                   this.#clickabletext1.render();
                 }
                 if (this.#clickabletext2===undefined){
-                    this.#clickabletext2 = new Clickabletext(document.querySelector(".right-container2"), this.validateData,"+ Текст");
+                    this.#clickabletext2 = new Clickabletext(document.querySelector(".right-container2"), "addBlock","+ Текст",{data:"bkjvgcfd",projName:href.substring(1)});
                     this.#clickabletext2.render();
                   }
                   if (this.#clickabletext3===undefined){
@@ -110,6 +115,25 @@ export class Header {
                 if (this.#clickabletext5!==undefined){
                     document.querySelector(".right-container5").removeChild(document.querySelector(".right-container5").querySelector(".clickable-text"))
                     this.#clickabletext5=undefined
+                }
+            }
+            if (href==="/codes"){
+                if (this.#clickabletextFiles1===undefined){
+                    this.#clickabletextFiles1 = new Clickabletext(document.querySelector(".right-container1"), this.validateData,"Создать");
+                    this.#clickabletextFiles1.render();
+                  }
+                  if (this.#clickabletextFiles2===undefined){
+                    this.#clickabletextFiles2 = new Clickabletext(document.querySelector(".right-container2"), this.validateData,"Загрузить");
+                    this.#clickabletextFiles2.render();
+                  }
+            } else{
+                if (this.#clickabletextFiles1!==undefined){
+                    document.querySelector(".right-container1").removeChild(document.querySelector(".right-container1").querySelector(".clickable-text"))
+                    this.#clickabletextFiles1=undefined
+                }
+                if (this.#clickabletextFiles2!==undefined){
+                    document.querySelector(".right-container2").removeChild(document.querySelector(".right-container2").querySelector(".clickable-text"))
+                    this.#clickabletextFiles2=undefined
                 }
             }
         });

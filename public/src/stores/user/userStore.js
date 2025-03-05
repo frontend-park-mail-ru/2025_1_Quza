@@ -108,7 +108,7 @@ class UserStore {
      */
     async register(credentials) {
         try {
-            const res = { username: credentials.login };
+            const res = { username: credentials.login };//передать на аякс
             console.log("signup successful (MOCK)");
             this.#state.isAuth = true;
             this.#state.username = res.username;

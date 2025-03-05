@@ -1,10 +1,12 @@
 import {AppEventMaker} from "../../modules/eventMaker.js";
 import {CodesStoreEvents} from "./events.js";
 import {CodeEvents} from "../../pages/codes/events.js";
+import { router } from "../../modules/router.js";
 
 class CodesStore {
     #selectedCodeData;
     #selectedCodeDOM;
+    #example;//TODO: delete this
 
     #codes;
 
@@ -28,6 +30,7 @@ class CodesStore {
             id: code.id, 
             title: "Mock Code",
             content: "This is mock code content.",
+            data:["string1","string2","string3"],
             create_time: new Date().toISOString(),
             update_time: new Date().toISOString()
         };
@@ -47,13 +50,36 @@ class CodesStore {
     /**
      * Инициализация всех проектов (MOCK)     */
     init () {
-        const codes = [ // MOCK
-            { id: 1, title: "Mock Code 1", content: "Mock content 1", create_time: new Date().toISOString(), update_time: new Date().toISOString() },
-            { id: 2, title: "Mock Code 2", content: "Mock content 2", create_time: new Date().toISOString(), update_time: new Date().toISOString() }
+        if (this.#example===undefined){
+            this.#example={}
+        }
+        if(this.#example["codes1"]===undefined){
+            this.#example["codes1"]=["bhvgrfhjkbdnlx"]
+        }
+        let codes = [ // MOCK
+            { id: "codes1", title: "Mock Code 1", content: "Mock content 1",
+                data:this.#example["codes1"],create_time: new Date().toISOString(), update_time: new Date().toISOString() },
+            { id: 2, title: "Mock Code 2", content: "Mock content 2", data:["string21","string22","string23"], create_time: new Date().toISOString(), update_time: new Date().toISOString() }
         ];
-        this.#codes = codes.map(code => this._convertCodeData(code));
+        this.#codes = codes;
         AppEventMaker.notify(CodesStoreEvents.CODES_RECEIVED, codes);
     }
+
+    /**
+         * Выполняет создание block (MOCK)
+         * @param credentials
+         * @returns {Promise<void>}
+         */
+        async addblock(credentials) {
+            try {
+                const res = { data: credentials.data };//передать на аякс
+                console.log("add block succesful (MOCK)");
+                this.#example[credentials.projName].push(credentials.data)
+                router.redirect("/"+credentials.projName)
+            } catch (err) {
+                console.log(err);
+            }
+        }
 
     /**
      * Обнуляет оффсет когда пользователь поикдает страницу с его проектами

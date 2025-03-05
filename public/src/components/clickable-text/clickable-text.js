@@ -1,6 +1,7 @@
 import "../../../build/clickable-text.js";
 import { router } from "../../modules/router.js";
 import {create_UUID} from "../../shared/uuid.js";
+import { AppCodesStore } from "../../stores/codes/codesStore.js";
 
 export class Clickabletext {
     #parent;
@@ -15,13 +16,18 @@ export class Clickabletext {
      * @param parent {HTMLElement} - родительский элемент
      * @param config {Object} - пропсы
      * @param onSubmit {Function} - колбэк-функция, срабатывающая при клике
+     * @param pageData {Function} - колбэк-функция, срабатывающая при клике
      */
-    constructor(parent, onSubmit,content) {
+    constructor(parent, onSubmit,content,pageData) {
         this.id = create_UUID();
         this.#parent = parent;
         this.#props.id = this.id;
         this.#props.content = content;
         this.#onSubmit = onSubmit;
+        if (pageData!==undefined){
+        this.#props.projName=pageData.projName;
+        this.#props.data=pageData.data;
+        }
         
         console.log(this.#parent)
     }
@@ -39,7 +45,11 @@ export class Clickabletext {
      */
     #addEventListeners(){
             this.self.addEventListener("click", (e) => {
-                router.redirect("/codes1");
+                if (this.#onSubmit==="addBlock"){
+                AppCodesStore.addblock({projName:this.#props.projName,data:this.#props.data})
+                console.log("bfjdhsjln")
+                //router.redirect("/codes1");
+                }
                 e.preventDefault();
             });
     }

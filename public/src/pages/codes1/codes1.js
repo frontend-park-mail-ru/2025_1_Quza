@@ -29,32 +29,22 @@ export default class CodesPage1 extends Page {
         if (reset){
             this.#codesContainer.innerHTML = "";
         }
-
-        if (codes.length > 0) {
-            //TODO: заменить на передачу с хранилищ моков (а то в 3 ночи спать хочется, а не этим заниматься)
-            let te1=new TextContainer(document.querySelector(".codes-container1"),{content:"text1"});
-            te1.render();
-            let te2=new TextContainer(document.querySelector(".codes-container1"),{content:"text2"});
-            te2.render();
-            let te3=new TextContainer(document.querySelector(".codes-container1"),{content:"text3"});
-            te3.render();
-            let te4=new TextContainer(document.querySelector(".codes-container1"),{content:"text4"});
-            te4.render();
-            /*for (const code of codes) {
-                console.log(code);
-                const codeClass = new Code(this.#codesContainer, code);
-                codeClass.render();
+        for (const code of codes){
+        if ((code.id==="codes1")&&(code.data.length > 0)) {
+            for (const block of code.data) {
+                let te=new TextContainer(document.querySelector(".codes-container1"),{content:block});
+                te.render();
             }
-
             let hasVerticalScrollbar = this.#codesContainer.scrollHeight > this.#codesContainer.clientHeight;
-            hasVerticalScrollbar && this.createObserver();*/
-
+            hasVerticalScrollbar && this.createObserver();
+            break;
         } else if (AppCodesStore.codes.length === 0) {
             const h3 = document.createElement("h1");
-            h3.innerText = "нет проектов";
+            h3.innerText = "нет блоков";
             h3.className = "not-found-label";
             this.#codesContainer.append(h3);
         }
+    }
     };
 
     /**
@@ -82,7 +72,7 @@ export default class CodesPage1 extends Page {
         //this.#searchBar.remove();
         //this.#codesEditor.remove();
         this.#unsubscribeFromEvents();
-        //super.remove();
+        super.remove();
     }
 
     /**
@@ -92,6 +82,7 @@ export default class CodesPage1 extends Page {
     selectCode = (code) => {
         AppCodesStore.unselectCode();
         AppCodesStore.fetchCode(code);
+
         code.classList.add("selected");
     };
 
@@ -106,7 +97,7 @@ export default class CodesPage1 extends Page {
      * Отписка от ивентов
      */
     #unsubscribeFromEvents() {
-        AppEventMaker.subscribe(CodesStoreEvents.CODES_RECEIVED, this.#renderCodes);
+        AppEventMaker.unsubscribe(CodesStoreEvents.CODES_RECEIVED, this.#renderCodes);
     }
 
     /**
@@ -119,8 +110,6 @@ export default class CodesPage1 extends Page {
         );
 
         this.#codesContainer = document.querySelector(".codes-container1");
-        this.#text=new TextContainer(document.querySelector(".codes-container1"),{content:"bfhjbmjhsbghdvhjn"})
-        this.#text.render();
 
         document.title = "Мои проекты";
         this.#subscribeToEvents();

@@ -4,6 +4,9 @@ import {RegisterForm} from "./register/register.js";
 import "../../../build/auth.js";
 import {Button} from "../../components/button/button.js";
 
+/**
+     * Страница аутентификации (вход/рега)
+     */
 export class AuthPage extends Page{
     #loginForm;
     #registerForm;

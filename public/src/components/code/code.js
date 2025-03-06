@@ -1,6 +1,9 @@
 import "../../../build/code.js";
 import {truncate} from "../../modules/utils.js";
 
+/**
+     * Один проект
+     */
 export class Code {
     #parent;
     #props;

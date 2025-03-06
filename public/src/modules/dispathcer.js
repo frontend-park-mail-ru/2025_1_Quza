@@ -1,4 +1,5 @@
 /**
+ * Рассыл действий всем зарегистрированным слушателям
  *  @typedef  {{type: string, payload: any}} CallbackAction*
 */
 

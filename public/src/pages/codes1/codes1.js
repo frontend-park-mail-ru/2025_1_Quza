@@ -9,6 +9,9 @@ import {CodesStoreEvents} from "../../stores/codes/events.js";
 import { Clickabletext } from "../../components/clickable-text/clickable-text.js";
 import { TextContainer } from "../../components/text-container/text-container.js";
 
+/**
+     * Страница одного проекта
+     */
 export default class CodesPage1 extends Page {
     #codesContainer;
 

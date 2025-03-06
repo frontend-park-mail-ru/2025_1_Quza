@@ -1,6 +1,9 @@
 import "../../../build/button.js";
 import {create_UUID} from "../../shared/uuid.js";
 
+/**
+     * Кнопка
+     */
 export class Button {
     #parent;
     #props = {

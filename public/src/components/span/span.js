@@ -1,5 +1,8 @@
 import "../../../build/span.js";
 
+/**
+     * Выделение отдельных строк
+     */
 export class Span {
     #parent;
     #config;

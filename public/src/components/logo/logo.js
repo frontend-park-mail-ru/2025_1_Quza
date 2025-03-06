@@ -3,6 +3,9 @@ import "../../../build/logo.js";
 import {AppUserStore} from "../../stores/user/userStore.js";
 import {router} from "../../modules/router.js";
 
+/**
+     * Логотип
+     */
 export class Logo {
     #parent;
     #config;

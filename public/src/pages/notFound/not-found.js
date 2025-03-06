@@ -3,6 +3,9 @@ import {router} from "../../modules/router.js";
 import {Button} from "../../components/button/button.js";
 import Page from "../page.js";
 
+/**
+     * Возвращается при ошибке перехода на несуществующую страницу
+     */
 export default class NotFoundPage extends Page {
     /**
      * Перенаправление пользователя на главную страницу

@@ -1,6 +1,9 @@
 import "../../../build/search-bar.js";
 import {AppCodesStore} from "../../stores/codes/codesStore.js";
 
+/**
+     * Поисковая панель
+     */
 export class SearchBar {
     #parent;
     #config;

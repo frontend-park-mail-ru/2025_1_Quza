@@ -3,6 +3,9 @@ import {CodesStoreEvents} from "./events.js";
 import {CodeEvents} from "../../pages/codes/events.js";
 import { router } from "../../modules/router.js";
 
+/**
+     * Хранилище всего, что связано с проектами
+     */
 class CodesStore {
     #selectedCodeData;
     #selectedCodeDOM;

@@ -1,5 +1,8 @@
 import "../../../build/empty-code.js";
 
+/**
+     * Пустое состояние проекта
+     */
 export class EmptyCode {
     #parent;
     #config;

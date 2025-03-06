@@ -1,3 +1,6 @@
+/**
+     * Определение класса страниц (более по-гошному: интерфейс)
+     */
 export default class Page {
     #parent;
     #config;

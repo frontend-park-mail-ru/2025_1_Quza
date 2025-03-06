@@ -1,5 +1,8 @@
 import "../../../build/image.js";
 
+/**
+     * Изображение
+     */
 export class Image {
     #parent;
     #config;

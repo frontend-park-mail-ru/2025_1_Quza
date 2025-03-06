@@ -9,6 +9,9 @@ import {SettingsPanel} from "../settings-panel/settings-panel.js";
 import {Logo} from "../logo/logo.js";
 import { AppCodesStore } from "../../stores/codes/codesStore.js";
 
+/**
+     * Хедер
+     */
 export class Header {
     #parent;
     #config;
@@ -20,12 +23,7 @@ export class Header {
     #authPageLink;
 
     #settingsPanel;
-
-    #clickabletext1;
-    #clickabletext2;
-    #clickabletext3;
-    #clickabletext4;
-    #clickabletext5;
+    #clickabletexts;
 
     #clickabletextFiles1;
     #clickabletextFiles2;
@@ -38,6 +36,7 @@ export class Header {
     constructor(parent, config) {
         this.#parent = parent;
         this.#config = config;
+        this.#clickabletexts=[]
     }
 
     /**
@@ -75,46 +74,46 @@ export class Header {
             }
             //чисто тест очистки содержимого кнопок хедера при изменении страницы (типо текст только по одной ссылке есть)
             if (href === "/codes1") {
-                if (this.#clickabletext1===undefined){
-                  this.#clickabletext1 = new Clickabletext(document.querySelector(".right-container1"), "addBlock","+ Код",{data:"bkjvgcfd",projName:href.substring(1)});
-                  this.#clickabletext1.render();
+                if (this.#clickabletexts[0]===undefined){
+                  this.#clickabletexts[0] = new Clickabletext(document.querySelector(".right-container1"), "addBlock","+ Код",{data:"bkjvgcfd",projName:href.substring(1)});
+                  this.#clickabletexts[0].render();
                 }
-                if (this.#clickabletext2===undefined){
-                    this.#clickabletext2 = new Clickabletext(document.querySelector(".right-container2"), "addBlock","+ Текст",{data:"bkjvgcfd",projName:href.substring(1)});
-                    this.#clickabletext2.render();
+                if (this.#clickabletexts[1]===undefined){
+                    this.#clickabletexts[1] = new Clickabletext(document.querySelector(".right-container2"), "addBlock","+ Текст",{data:"bkjvgcfd",projName:href.substring(1)});
+                    this.#clickabletexts[1].render();
                   }
-                  if (this.#clickabletext3===undefined){
-                    this.#clickabletext3 = new Clickabletext(document.querySelector(".right-container3"), this.validateData,"Скачать");
-                    this.#clickabletext3.render();
+                  if (this.#clickabletexts[2]===undefined){
+                    this.#clickabletexts[2] = new Clickabletext(document.querySelector(".right-container3"), this.validateData,"Скачать");
+                    this.#clickabletexts[2].render();
                   }
-                  if (this.#clickabletext4===undefined){
-                    this.#clickabletext4 = new Clickabletext(document.querySelector(".right-container4"), this.validateData,"Поделиться");
-                    this.#clickabletext4.render();
+                  if (this.#clickabletexts[3]===undefined){
+                    this.#clickabletexts[3] = new Clickabletext(document.querySelector(".right-container4"), this.validateData,"Поделиться");
+                    this.#clickabletexts[3].render();
                   }
-                  if (this.#clickabletext5===undefined){
-                    this.#clickabletext5 = new Clickabletext(document.querySelector(".right-container5"), this.validateData,"Удалить");
-                    this.#clickabletext5.render();
+                  if (this.#clickabletexts[4]===undefined){
+                    this.#clickabletexts[4] = new Clickabletext(document.querySelector(".right-container5"), this.validateData,"Удалить");
+                    this.#clickabletexts[4].render();
                   }
             } else {
-                if (this.#clickabletext1!==undefined){
+                if (this.#clickabletexts[0]!==undefined){
                     document.querySelector(".right-container1").removeChild(document.querySelector(".right-container1").querySelector(".clickable-text"))
-                    this.#clickabletext1=undefined
+                    this.#clickabletexts[0]=undefined
                 }
-                if (this.#clickabletext2!==undefined){
+                if (this.#clickabletexts[1]!==undefined){
                     document.querySelector(".right-container2").removeChild(document.querySelector(".right-container2").querySelector(".clickable-text"))
-                    this.#clickabletext2=undefined
+                    this.#clickabletexts[1]=undefined
                 }
-                if (this.#clickabletext3!==undefined){
+                if (this.#clickabletexts[2]!==undefined){
                     document.querySelector(".right-container3").removeChild(document.querySelector(".right-container3").querySelector(".clickable-text"))
-                    this.#clickabletext3=undefined
+                    this.#clickabletexts[2]=undefined
                 }
-                if (this.#clickabletext4!==undefined){
+                if (this.#clickabletexts[3]!==undefined){
                     document.querySelector(".right-container4").removeChild(document.querySelector(".right-container4").querySelector(".clickable-text"))
-                    this.#clickabletext4=undefined
+                    this.#clickabletexts[3]=undefined
                 }
-                if (this.#clickabletext5!==undefined){
+                if (this.#clickabletexts[4]!==undefined){
                     document.querySelector(".right-container5").removeChild(document.querySelector(".right-container5").querySelector(".clickable-text"))
-                    this.#clickabletext5=undefined
+                    this.#clickabletexts[4]=undefined
                 }
             }
             if (href==="/codes"){

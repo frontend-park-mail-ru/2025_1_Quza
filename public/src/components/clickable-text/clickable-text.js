@@ -3,6 +3,9 @@ import { router } from "../../modules/router.js";
 import {create_UUID} from "../../shared/uuid.js";
 import { AppCodesStore } from "../../stores/codes/codesStore.js";
 
+/**
+     * Текст, на который можно нажать
+     */
 export class Clickabletext {
     #parent;
     #props = {

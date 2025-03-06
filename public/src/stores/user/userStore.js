@@ -3,6 +3,9 @@ import {AppEventMaker} from "../../modules/eventMaker.js";
 import {UserStoreEvents} from "./events.js";
 import {router} from "../../modules/router.js";
 
+/**
+     * Хранилище для пользователей
+     */
 class UserStore {
     #state;
     #fetchUserData;

@@ -3,6 +3,9 @@ import {AppEventMaker} from "../../modules/eventMaker.js";
 import {CodeEvents} from "../../pages/codes/events.js";
 import {AppCodesStore} from "../../stores/codes/codesStore.js";
 
+/**
+     * Редактирование проекта
+     */
 export class CodeEditor{
     #parent;
     #config;

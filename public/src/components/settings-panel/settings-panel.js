@@ -6,6 +6,9 @@ import {AppUserStore, UserActions} from "../../stores/user/userStore.js";
 import {AppDispatcher} from "../../modules/dispathcer.js";
 import {SettingsButton} from "./settings-button/settings-button.js";
 
+/**
+     * Панель настроек
+     */
 export class SettingsPanel {
     #parent;
     #config;

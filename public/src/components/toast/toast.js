@@ -3,6 +3,9 @@ import {create_UUID} from "../../shared/uuid.js";
 import {AppEventMaker} from "../../modules/eventMaker.js";
 import {TOAST_TYPE, ToastEvents} from "../../modules/toasts.js";
 
+/**
+     * Всплывющие сообщения о работе (справа появится)
+     */
 export class Toast {
     #parent;
 

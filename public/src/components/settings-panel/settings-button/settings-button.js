@@ -1,5 +1,8 @@
 import "../../../../build/settings-button.js";
 
+/**
+     * Кнопка по открытию настроек
+     */
 export class SettingsButton {
     #config;
     #parent;

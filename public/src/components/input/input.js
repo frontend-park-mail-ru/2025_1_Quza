@@ -3,6 +3,9 @@ import {inputEvents} from "./events.js";
 import {AppEventMaker} from "../../modules/eventMaker.js";
 import {create_UUID} from "../../shared/uuid.js";
 
+/**
+     * Поле ввода
+     */
 export class Input {
     #parent;
     #config;

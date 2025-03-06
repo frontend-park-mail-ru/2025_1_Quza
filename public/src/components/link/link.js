@@ -2,6 +2,9 @@ import "../../../build/link.js";
 import {router} from "../../modules/router.js";
 import {create_UUID} from "../../shared/uuid.js";
 
+/**
+     * Ссылка
+     */
 export class Link {
     #parent;
 

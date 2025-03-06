@@ -9,6 +9,9 @@ import {UserActions} from "../../../stores/user/userStore.js";
 import {ValidateLogin, ValidatePassword} from "../../../shared/validation.js";
 import { Link } from "../../../components/link/link.js";
 
+/**
+     * Форма реги
+     */
 export class RegisterForm {
     #parent;
     #config;

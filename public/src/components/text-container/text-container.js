@@ -1,6 +1,9 @@
 import "../../../build/text-container.js";
 import { create_UUID } from "../../shared/uuid.js";
 
+/**
+     * Контейнер для текста
+     */
 export class TextContainer {
     #parent;
     #props;

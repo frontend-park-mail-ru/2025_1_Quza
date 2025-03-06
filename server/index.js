@@ -30,6 +30,9 @@ const mimeTypes = {
     'wasm': 'application/wasm'
 }
 
+/**
+     * Получение статики
+     */
 const staticFile = (res, filePath, ext) => {
     res.setHeader("Content-Type", mimeTypes[ext])
     fs.readFile("./public" + filePath, (error, data) => {
@@ -42,7 +45,9 @@ const staticFile = (res, filePath, ext) => {
     })
 }
 
-
+/**
+     * Инициализация сервера
+     */
 const server = http.createServer((req, res) => {
     const {url} = req
 

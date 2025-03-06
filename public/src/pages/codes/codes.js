@@ -8,6 +8,9 @@ import {AppEventMaker} from "../../modules/eventMaker.js";
 import {CodesStoreEvents} from "../../stores/codes/events.js";
 import { router } from "../../modules/router.js";
 
+/**
+     * Страница проектов
+     */
 export default class CodesPage extends Page {
     #codesContainer;
     #main;

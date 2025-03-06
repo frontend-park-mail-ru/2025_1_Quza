@@ -8,6 +8,9 @@ import {AppDispatcher} from "./dispathcer.js";
 import {AuthPage} from "../pages/auth/auth.js";
 import {UserStoreEvents} from "../stores/user/events.js";
 
+/**
+     * Роутинг страниц
+     */
 class Router {
     #currentUrl;
     #currentPage;

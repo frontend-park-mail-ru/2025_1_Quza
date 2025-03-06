@@ -1,5 +1,8 @@
 import "../../../build/wrapper.js";
 
+/**
+     * Разделение
+     */
 export class Wrapper {
     #parent;
     #config;

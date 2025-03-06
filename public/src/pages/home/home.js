@@ -4,6 +4,9 @@ import {router} from "../../modules/router.js";
 import {Button} from "../../components/button/button.js";
 import Page from "../page.js";
 
+/**
+     * Домашняя страница (что пользователь первым делом видит)
+     */
 export default class Home extends Page {
     /**
      * Если пользователь авторизован, то перенаправляет его на страницу с программами, если нет - то на страницу входа

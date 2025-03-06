@@ -57,9 +57,9 @@ class CodesStore {
             this.#example["codes1"]=["bhvgrfhjkbdnlx"]
         }
         let codes = [ // MOCK
-            { id: "codes1", title: "Mock Code 1", content: "Mock content 1",
+            { id: "codes1", title: "Mock Code 1", content: "0 mb",
                 data:this.#example["codes1"],create_time: new Date().toISOString(), update_time: new Date().toISOString() },
-            { id: 2, title: "Mock Code 2", content: "Mock content 2", data:["string21","string22","string23"], create_time: new Date().toISOString(), update_time: new Date().toISOString() }
+            { id: 2, title: "Mock Code 2", content: "0 mb", data:["string21","string22","string23"], create_time: new Date().toISOString(), update_time: new Date().toISOString() }
         ];
         this.#codes = codes;
         AppEventMaker.notify(CodesStoreEvents.CODES_RECEIVED, codes);

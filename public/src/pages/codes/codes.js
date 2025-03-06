@@ -10,6 +10,7 @@ import { router } from "../../modules/router.js";
 
 export default class CodesPage extends Page {
     #codesContainer;
+    #main;
 
     #codesEditor;
 
@@ -66,7 +67,6 @@ export default class CodesPage extends Page {
      */
     remove() {
         AppCodesStore.clean();
-        this.#searchBar.remove();
         this.#codesEditor.remove();
         this.#unsubscribeFromEvents();
         super.remove();
@@ -123,9 +123,6 @@ export default class CodesPage extends Page {
                 this.selectCode(document.getElementById(id));
             }
         });
-
-        this.#searchBar = new SearchBar(this.self.querySelector("aside"), this.config.searchBar);
-        this.#searchBar.render();
 
         this.#codesEditor = new CodeEditor(this.self, this.config.codeEditor);
         this.#codesEditor.render();

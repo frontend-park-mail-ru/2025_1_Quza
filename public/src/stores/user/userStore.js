@@ -4,11 +4,11 @@ import {UserStoreEvents} from "./events.js";
 import {router} from "../../modules/router.js";
 
 /**
-     * Хранилище для пользователей
-     */
+ * Хранилище для пользователей
+ */
 class UserStore {
     #state;
-    #fetchUserData;
+
 
     /**
      * Конструктор класса
@@ -65,92 +65,171 @@ class UserStore {
      * @returns {boolean}
      */
     IsAuthenticated() {
-        console.log("IsAuthenticated");
-        console.log(this.#state);
         return this.#state.isAuth;
     }
 
     /**
-     * Выполняет авторизацию пользователя (MOCK)
-     * @param credentials{{login: string, password: string}} принимает логин и пароль
-     * @returns {Promise<void>}
+     * Регистрирует пользователя.
+     * устанавливаем cookies.
+     */
+    async register(credentials) {
+        console.log("Register credentials:", credentials);
+
+        try {
+            const response = await fetch("http://localhost:8080/auth/signup", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "include",
+                body: JSON.stringify({
+                    email: credentials.login,
+                    password: credentials.password
+                })
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`Не удалось зарегистрировать: ${response.status} - ${errorText}`);
+            }
+
+            AppEventMaker.notify(UserStoreEvents.SUCCESSFUL_REGISTER);
+
+            await this.login({ login: credentials.login, password: credentials.password });
+        } catch (err) {
+            console.error("[register] error:", err);
+        }
+    }
+
+    /**
+     * Авторизация пользователя.
+     * устанавливаем HttpOnly cookies с access и refresh токенами.
      */
     async login(credentials){
         try {
-            const res = { username: credentials.login };
-            console.log("login successful (MOCK)");
+            const response = await fetch("http://localhost:8080/auth/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "include",
+                body: JSON.stringify({
+                    email: credentials.login,
+                    password: credentials.password
+                })
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`Ошибка входа: ${response.status} - ${errorText}`);
+            }
+
             this.#state.isAuth = true;
-            this.#state.username = res.username;
+            this.#state.username = credentials.login;
+
             router.redirect("/codes");
             AppEventMaker.notify(UserStoreEvents.SUCCESSFUL_LOGIN);
         } catch (err) {
-            console.log(err);
+            console.error("[login] error:", err);
         }
     }
 
     /**
-     * Делает выход из аккаунта (MOCK)
-     * @returns {Promise<void>}
+     * Выход из аккаунта.
+     * Отправляем запрос с cookies, сервер удалит cookies, а клиент обновит состояние.
      */
     async logout() {
         try {
-            console.log("logout successful (MOCK)");
+            const response = await fetch("http://localhost:8080/auth/logout", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "include",
+                body: JSON.stringify({})
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`Ошибка логаута: ${response.status} - ${errorText}`);
+            }
+
             this.#state.isAuth = false;
             this.#state.username = "";
+
             router.redirect("/");
             AppEventMaker.notify(UserStoreEvents.LOGOUT);
         } catch (err) {
-            console.log(err);
+            console.error("[logout] error:", err);
         }
     }
 
     /**
-     * Выполняет регистрацию пользователя (MOCK)
-     * @param credentials
-     * @returns {Promise<void>}
+     * Проверка авторизации пользователя.
+     * Запрос отправляется с cookies, сервер проверяет их и возвращает профиль пользователя.
      */
-    async register(credentials) {
+    async checkUser() {
         try {
-            const res = { username: credentials.login };//передать на аякс
-            console.log("signup successful (MOCK)");
-            this.#state.isAuth = true;
-            this.#state.username = res.username;
-            router.redirect("/codes");
-            AppEventMaker.notify(UserStoreEvents.SUCCESSFUL_LOGIN);
-        } catch (err) {
-            console.log(err);
-        }
-    }
+            const response = await fetch("http://localhost:8080/user/profile", {
+                method: "GET",
+                credentials: "include"
+            });
 
-    /**
-     * Проверяет, авторизован ли пользователь (MOCK)
-     * @returns {Promise<void>}
-     */
-    async checkUser(){
-        try {
-            const res = { username: "mockuser" };
-            this.#state.isAuth = true;
-            this.#state.username = res.username;
-            AppEventMaker.notify(UserStoreEvents.SUCCESSFUL_LOGIN);
+            if (response.ok) {
+                const data = await response.json();
+                this.#state.isAuth = true;
+                this.#state.username = data.email;
+                AppEventMaker.notify(UserStoreEvents.SUCCESSFUL_LOGIN);
+            } else if (response.status === 401) {
+                console.log("Профиль недоступен (401). Попробуем refresh-токен...");
+                const refreshed = await this.tryRefreshToken();
+                if (refreshed) {
+                    return await this.checkUser();
+                } else {
+                    this.#state.isAuth = false;
+                }
+            } else {
+                console.log("Профиль недоступен:", response.status);
+                this.#state.isAuth = false;
+            }
         } catch (err) {
-            console.log("не зареган (MOCK)");
-            console.log(err);
+            console.log("[checkUser] error:", err);
+            this.#state.isAuth = false;
         } finally {
             AppEventMaker.notify(UserStoreEvents.USER_CHECKED);
         }
     }
+
+    /**
+     * Попытка обновления токенов через refresh-токен.
+     * Запрос отправляется с cookies.
+     */
+    async tryRefreshToken() {
+        try {
+            const response = await fetch("http://localhost:8080/auth/refresh", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "include",
+                body: JSON.stringify({})
+            });
+
+            if (!response.ok) {
+                console.log("Не удалось обновить токены:", response.status);
+                return false;
+            }
+
+            return true;
+        } catch (err) {
+            console.log("[tryRefreshToken] error:", err);
+            return false;
+        }
+    }
 }
 
-/**
- *
- * @type {UserStore}
- */
 export const AppUserStore = new UserStore();
 
-/**
- *
- * @type {{REGISTER: string, LOGOUT: string, CHANGE_PAGE: string, LOGIN: string, CHECK_USER: string}}
- */
 export const UserActions = {
     LOGIN: "LOGIN",
     REGISTER: "REGISTER",

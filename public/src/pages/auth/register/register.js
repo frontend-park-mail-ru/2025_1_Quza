@@ -6,12 +6,12 @@ import {UserStoreEvents} from "../../../stores/user/events.js";
 import {inputEvents} from "../../../components/input/events.js";
 import {AppDispatcher} from "../../../modules/dispathcer.js";
 import {UserActions} from "../../../stores/user/userStore.js";
-import {ValidateLogin, ValidatePassword} from "../../../shared/validation.js";
+import {ValidateEmail, ValidatePassword} from "../../../shared/validation.js";
 import { Link } from "../../../components/link/link.js";
 
 /**
-     * Форма реги
-     */
+ * Форма реги
+ */
 export class RegisterForm {
     #parent;
     #config;
@@ -44,9 +44,9 @@ export class RegisterForm {
      * Валидация введенных данных
      */
     validateData = () => {
-        const validateLogin = this.#validateLogin();
+        const validateEmail = this.#validateEmail();
         const validatePassword = this.#validatePassword();
-        if (validateLogin && validatePassword) {
+        if (validateEmail && validatePassword) {
 
             AppDispatcher.dispatch({
                 type: UserActions.REGISTER,
@@ -62,12 +62,12 @@ export class RegisterForm {
      * Валидация логина
      * @returns {boolean}
      */
-    #validateLogin(){
+    #validateEmail(){
         delete this.#loginInput.self.dataset.error;
 
         const value = this.#loginInput.value;
 
-        const validationResult = ValidateLogin(value);
+        const validationResult = ValidateEmail(value);
 
         if (!validationResult.result){
             this.#loginInput.throwError(validationResult.message);
@@ -119,7 +119,7 @@ export class RegisterForm {
      */
     #inputEventHandler = (id) => {
         if (id === this.#loginInput.id){
-            this.#validateLogin();
+            this.#validateEmail();
         } else if (id === this.#passwordInput.id){
             this.#validatePassword();
         } else if (id === this.#repeatPasswordInput.id){

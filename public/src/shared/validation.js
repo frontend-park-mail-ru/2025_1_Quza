@@ -74,3 +74,24 @@ export const ValidateLogin = (value) => {
 const ValidationResult = (result, message = null) => {
     return {result, message};
 };
+
+
+/**
+ * Выполняет валидацию почты
+ * @param value {string} переданная строка
+ * @returns {{result: boolean, message: (string|null)}} вернет true - если почта подходит, в противном случае false, а также сообщение об ошибке
+ */
+export const ValidateEmail = (value) => {
+    if (value === "") {
+        return ValidationResult(false, "Почта не может быть пустой!");
+    }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(value)) {
+        return ValidationResult(false, "Некорректный формат почты!");
+    }
+
+    return ValidationResult(true);
+};
+
+

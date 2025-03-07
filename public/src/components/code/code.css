@@ -1,0 +1,39 @@
+.code-container {
+    display: flex;
+    flex-direction: column;
+    background-color: aliceblue;
+    border-radius: 5px;
+    width: 100%;
+    cursor: pointer;
+    transition: 0.5s;
+    position: relative;
+}
+
+.code-container:hover {
+    background-color: rgba(128, 128, 128, 0.300);
+}
+
+
+.code-container h3 {
+    color: var(--text-main-color--darker);
+}
+
+.code-container p {
+    color: var(--text-main-color--darker);
+}
+
+.code-container.selected {
+    box-shadow: 0 0 5px var(--primary-color),
+                0 0 15px var(--primary-color);
+}
+
+.code-container .update-time {
+    position: absolute;
+    right: 250px;
+    color: var(--text-main-color--darker);
+}
+.code-container .content {
+    position: absolute;
+    right: 10px;
+    color: var(--text-main-color--darker);
+}

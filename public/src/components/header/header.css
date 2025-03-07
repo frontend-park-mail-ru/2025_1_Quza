@@ -1,0 +1,70 @@
+header {
+    width: 100%;
+    padding: 0 15%;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    transition: 0.5s;
+    z-index: 1000;
+    background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0));
+}
+
+header.black {
+    background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0));
+}
+
+header .right-container {
+    display: flex;
+    align-items: center;
+}
+
+header .right-container1 {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 30px;
+    left: 300px;
+}
+
+header .right-container2 {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 30px;
+    left: 400px;
+}
+
+header .right-container3 {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 30px;
+    left: 500px;
+}
+
+header .right-container4 {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 30px;
+    left: 600px;
+}
+
+header .right-container5 {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 30px;
+    left: 720px;
+}
+
+header .menu-container {
+    display: flex;
+    gap: 20px;
+}
+
+header .menu-container .menu-item a {
+    text-decoration: none;
+}

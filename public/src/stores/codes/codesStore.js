@@ -9,7 +9,6 @@ import { router } from "../../modules/router.js";
 class CodesStore {
     #selectedCodeData;
     #selectedCodeDOM;
-    #example;//TODO: delete this
 
     #codes;
 
@@ -51,38 +50,52 @@ class CodesStore {
     }
 
     /**
-     * Инициализация всех проектов (MOCK)     */
-    init () {
-        if (this.#example===undefined){
-            this.#example={}
-        }
-        if(this.#example["codes1"]===undefined){
-            this.#example["codes1"]=["bhvgrfhjkbdnlx"]
-        }
-        let codes = [ // MOCK
-            { id: "codes1", title: "Mock Code 1", content: "0 mb",
-                data:this.#example["codes1"],create_time: new Date().toISOString(), update_time: new Date().toISOString() },
-            { id: 2, title: "Mock Code 2", content: "0 mb", data:["string21","string22","string23"], create_time: new Date().toISOString(), update_time: new Date().toISOString() }
-        ];
-        this.#codes = codes;
-        AppEventMaker.notify(CodesStoreEvents.CODES_RECEIVED, codes);
+     * Инициализация всех проектов   
+     * Запрос к серверу, сервер возвращает ответ и сохраняет в #codes   */
+    init() {
+            fetch("http://localhost:8080/file") 
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .then(data => {
+                this.#codes = data;
+                AppEventMaker.notify(CodesStoreEvents.CODES_RECEIVED, data);
+            })
+            .catch(error => {
+                console.error("Fetch error:", error);
+            });
     }
+    
 
     /**
-         * Выполняет создание block (MOCK)
+         * Выполняет создание block
          * @param credentials
          * @returns {Promise<void>}
          */
         async addblock(credentials) {
             try {
-                const res = { data: credentials.data };//передать на аякс
-                console.log("add block succesful (MOCK)");
-                this.#example[credentials.projName].push(credentials.data)
-                router.redirect("/"+credentials.projName)
+                await fetch("/file", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        projName: credentials.projName, 
+                        data: credentials.data
+                    })
+                });
+        
+                console.log("add block успешен (нет возврата данных)");
+                router.redirect("/" + credentials.projName);
             } catch (err) {
-                console.log(err);
+                console.error("Ошибка в addblock:", err);
             }
         }
+    
+        
 
     /**
      * Обнуляет оффсет когда пользователь поикдает страницу с его проектами

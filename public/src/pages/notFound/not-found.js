@@ -11,7 +11,7 @@ export default class NotFoundPage extends Page {
      * Перенаправление пользователя на главную страницу
      */
     handleButtonClick = () => {
-        router.redirect("/");
+        router.redirect("/register");
     };
 
     /**

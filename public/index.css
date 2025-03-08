@@ -1,9 +1,7 @@
-@import 'src/pages/home/home.css';
 @import "src/pages/auth/auth.css";
 @import "src/pages/notFound/not-found.css";
 @import './src/pages/codes/codes.css';
 @import './src/pages/codes1/codes1.css';
-@import './src/pages/home/home.css';
 @import './src/components/header/header.css';
 @import './src/components/text-container/text-container.css';
 @import './src/components/code/code.css';

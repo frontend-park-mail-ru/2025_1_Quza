@@ -156,9 +156,8 @@ export class LoginForm {
         var RegLink = {
             text:"Регистрация",
             href:"/register",
+            preText:"Нет аккаунта? ",
         }
-        this.#RegLink = new Link(this.self, RegLink);
-        this.#RegLink.render();
 
         this.#loginInput = new Input(this.self, this.#config.inputs.login);
         this.#loginInput.render();
@@ -168,6 +167,9 @@ export class LoginForm {
 
         this.#submitBtn = new Button(this.self, this.#config.buttons.submitBtn, this.validateData);
         this.#submitBtn.render();
+
+        this.#RegLink = new Link(this.self, RegLink);
+        this.#RegLink.render();
 
         this.#subscribeToEvents();
     }

@@ -36,7 +36,7 @@ export class Logo {
      * на главную страницу, если он не авторизован
      */
     #handleClick() {
-        const href = AppUserStore.IsAuthenticated() ? "/codes" : "/";
+        const href = AppUserStore.IsAuthenticated() ? "/codes" : "/register";
         router.redirect(href);
     }
 

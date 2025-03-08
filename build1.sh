@@ -1,6 +1,5 @@
 #!/bin/bash
 mkdir -p public/build
-handlebars -m public/src/pages/home/home.hbs -f public/build/home.js
 handlebars -m public/src/pages/notFound/not-found.hbs -f public/build/not-found.js
 handlebars -m public/src/pages/codes/codes.hbs -f public/build/codes.js
 handlebars -m public/src/pages/codes1/codes1.hbs -f public/build/codes1.js

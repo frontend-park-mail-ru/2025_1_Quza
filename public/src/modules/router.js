@@ -1,4 +1,3 @@
-import Home from "../pages/home/home.js";
 import NotFoundPage from "../pages/notFound/not-found.js";
 import CodesPage from "../pages/codes/codes.js";
 import CodesPage1 from "../pages/codes1/codes1.js";
@@ -31,8 +30,6 @@ class Router {
      * @param config {Object} - глобальный конфиг
      */
     init(root, config){
-        const homePage = new Home(root, config.homePage);
-        this.registerPage("/", homePage);
 
         const codesPage = new CodesPage(root, config.codesPage);
         this.registerPage("/codes", codesPage);
@@ -51,13 +48,13 @@ class Router {
 
         AppEventMaker.subscribe(UserStoreEvents.SUCCESSFUL_LOGIN, () => {
             if (this.#currentPage?.needAuth === false) {
-                this.redirect("/");
+                this.redirect("/register");
             }
         });
 
         AppEventMaker.subscribe(UserStoreEvents.USER_CHECKED, () => {
             if (this.#currentPage?.needAuth === true && !AppUserStore.IsAuthenticated()) {
-                this.redirect("/");
+                this.redirect("/register");
             }
         });
 

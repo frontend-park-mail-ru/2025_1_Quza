@@ -25,6 +25,7 @@ export class Link {
         this.#props.id = this.id;
         this.#props.text = config.text;
         this.#props.href = config.href;
+        this.#props.preText = config.preText;
     }
 
     /**

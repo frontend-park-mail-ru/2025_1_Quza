@@ -1,11 +1,3 @@
-const homePage = {
-    id: "home",
-    href: "/",
-    linkToLoginPage: {
-        text: "Попробовать"
-    }
-}
-
 const codesPage1 = {
     id: "codes-page1",
     href: "/codes1",
@@ -163,7 +155,6 @@ const avatar = {
 }
 
 export const config = {
-    homePage: homePage,
     codesPage1: codesPage1,
     codesPage: codesPage,
     authPage: authPage,

@@ -204,9 +204,8 @@ export class RegisterForm {
         var LogLink = {
             text:"Войти",
             href:"/login",
+            preText: "Уже есть аккаунт? ",
         }
-        this.#LogLink = new Link(this.self, LogLink);
-        this.#LogLink.render();
 
         this.#loginInput = new Input(this.self, this.#config.inputs.login);
         this.#loginInput.render();
@@ -219,6 +218,9 @@ export class RegisterForm {
 
         this.#submitBtn = new Button(this.self, this.#config.buttons.submitBtn, this.validateData);
         this.#submitBtn.render();
+
+        this.#LogLink = new Link(this.self, LogLink);
+        this.#LogLink.render();
 
         this.#subscribeToEvents();
     }

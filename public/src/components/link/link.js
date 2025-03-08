@@ -1,80 +1,80 @@
-import "../../../build/link.js";
-import {router} from "../../modules/router.js";
-import {create_UUID} from "../../shared/uuid.js";
+import '../../../build/link.js';
+import { router } from '../../modules/router.js';
+import { create_UUID } from '../../shared/uuid.js';
 
 /**
-     * Ссылка
-     */
+ * Ссылка
+ */
 export class Link {
-    #parent;
+  #parent;
 
-    #props = {};
+  #props = {};
 
-    id;
+  id;
 
-    /**
-     * Конструктор класса
-     * @param parent {HTMLElement} - родительский элемент
-     * @param config {Object} - пропсы
-     */
-    constructor(parent, config) {
-        this.id = create_UUID();
+  /**
+   * Конструктор класса
+   * @param parent {HTMLElement} - родительский элемент
+   * @param config {Object} - пропсы
+   */
+  constructor(parent, config) {
+    this.id = create_UUID();
 
-        this.#parent = parent;
+    this.#parent = parent;
 
-        this.#props.id = this.id;
-        this.#props.text = config.text;
-        this.#props.href = config.href;
-        this.#props.preText = config.preText;
-    }
+    this.#props.id = this.id;
+    this.#props.text = config.text;
+    this.#props.href = config.href;
+    this.#props.preText = config.preText;
+  }
 
-    /**
-     * Возвращает HTML элемент компонента
-     * @returns {HTMLElement}
-     */
-    get self(){
-        return document.getElementById(this.id);
-    }
+  /**
+   * Возвращает HTML элемент компонента
+   * @returns {HTMLElement}
+   */
+  get self() {
+    return document.getElementById(this.id);
+  }
 
-    /**
-     * При клике на ссылке происходит редирект на указанный адрес
-     * @param e
-     */
-    handleClick = (e) => {
-        e.preventDefault();
-        router.redirect(this.#props.href);
-    };
+  /**
+   * При клике на ссылке происходит редирект на указанный адрес
+   * @param e
+   */
+  handleClick = (e) => {
+    e.preventDefault();
+    router.redirect(this.#props.href);
+  };
 
-    /**
-     * Подписка на события
-     */
-    #addListeners () {
-        this.self.addEventListener("click", this.handleClick);
-    }
+  /**
+   * Подписка на события
+   */
+  #addListeners() {
+    this.self.addEventListener('click', this.handleClick);
+  }
 
-    /**
-     * Отписка от событий
-     */
-    #removeListeners () {
-        this.self.removeEventListener("click", this.handleClick);
-    }
+  /**
+   * Отписка от событий
+   */
+  #removeListeners() {
+    this.self.removeEventListener('click', this.handleClick);
+  }
 
-    /**
-     * Очистка
-     */
-    remove() {
-        this.#removeListeners();
-    }
+  /**
+   * Очистка
+   */
+  remove() {
+    this.#removeListeners();
+  }
 
-    /**
-     * Рендеринг компонента
-     */
-    render() {
-        this.#parent.insertAdjacentHTML(
-            "beforeend",
-            window.Handlebars.templates["link.hbs"](this.#props)
-        );
+  /**
+   * Рендеринг компонента
+   */
+  render() {
+    this.#parent.insertAdjacentHTML(
+      'beforeend',
+      window.Handlebars.templates['link.hbs'](this.#props),
+    );
 
-        this.#addListeners();
-    }
+    this.#addListeners();
+  }
 }

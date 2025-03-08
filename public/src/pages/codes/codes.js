@@ -1,138 +1,138 @@
-import "../../../build/codes.js";
-import {Code} from "../../components/code/code.js";
-import Page from "../page.js";
-import {CodeEditor} from "../../components/code-editor/code-editor.js";
-import {AppCodesStore} from "../../stores/codes/codesStore.js";
-import {SearchBar} from "../../components/search-bar/search-bar.js";
-import {AppEventMaker} from "../../modules/eventMaker.js";
-import {CodesStoreEvents} from "../../stores/codes/events.js";
-import { router } from "../../modules/router.js";
+import '../../../build/codes.js';
+import { Code } from '../../components/code/code.js';
+import Page from '../page.js';
+import { CodeEditor } from '../../components/code-editor/code-editor.js';
+import { AppCodesStore } from '../../stores/codes/codesStore.js';
+import { AppEventMaker } from '../../modules/eventMaker.js';
+import { CodesStoreEvents } from '../../stores/codes/events.js';
+import { router } from '../../modules/router.js';
 
 /**
-     * Страница проектов
-     */
+ * Страница проектов
+ */
 export default class CodesPage extends Page {
-    #codesContainer;
-    #main;
+  #codesContainer;
+  #main;
 
-    #codesEditor;
+  #codesEditor;
 
-    #searchBar;
+  #searchBar;
 
-    /**
-     * Рендеринг списка программ
-     * @param codes
-     * @param reset {boolean}
-     */
-    #renderCodes = (codes, reset=false) => {
-        console.log("renderCodes");
-        if (reset){
-            this.#codesContainer.innerHTML = "";
+  /**
+   * Рендеринг списка программ
+   * @param codes
+   * @param reset {boolean}
+   */
+  #renderCodes = (codes, reset = false) => {
+    console.log('renderCodes');
+    if (reset) {
+      this.#codesContainer.innerHTML = '';
+    }
+
+    if (codes.length > 0) {
+      for (const code of codes) {
+        console.log(code);
+        const codeClass = new Code(this.#codesContainer, code);
+        codeClass.render();
+      }
+
+      let hasVerticalScrollbar =
+        this.#codesContainer.scrollHeight > this.#codesContainer.clientHeight;
+      hasVerticalScrollbar && this.createObserver();
+    } else if (AppCodesStore.codes.length === 0) {
+      const h3 = document.createElement('h1');
+      h3.innerText = 'нет проектов';
+      h3.className = 'not-found-label';
+      this.#codesContainer.append(h3);
+    }
+  };
+
+  /**
+   * Инициализация обсервера для динамической пагинации проектов
+   */
+  createObserver() {
+    let observer = new IntersectionObserver(function (entries, observer) {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          AppCodesStore.loadCodes();
+          observer.unobserve(entry.target);
         }
+      });
+    });
 
-        if (codes.length > 0) {
-            for (const code of codes) {
-                console.log(code);
-                const codeClass = new Code(this.#codesContainer, code);
-                codeClass.render();
-            }
+    observer.observe(
+      this.#codesContainer.querySelector('.code-container:last-child'),
+    );
+  }
 
-            let hasVerticalScrollbar = this.#codesContainer.scrollHeight > this.#codesContainer.clientHeight;
-            hasVerticalScrollbar && this.createObserver();
+  /**
+   * Очистка мусора
+   */
+  remove() {
+    AppCodesStore.clean();
+    this.#codesEditor.remove();
+    this.#unsubscribeFromEvents();
+    super.remove();
+  }
 
-        } else if (AppCodesStore.codes.length === 0) {
-            const h3 = document.createElement("h1");
-            h3.innerText = "нет проектов";
-            h3.className = "not-found-label";
-            this.#codesContainer.append(h3);
-        }
-    };
+  /**
+   * Срабатывает при клике по проекту
+   * @param code {HTMLElement}
+   */
+  selectCode = () => {
+    router.redirect('/codes1');
+    // AppCodesStore.unselectCode();
+    // AppCodesStore.fetchCode(code);
+    // code.classList.add("selected");
+  };
 
-    /**
-     * Инициализация обсервера для динамической пагинации проектов
-     */
-    createObserver() {
-        let observer = new IntersectionObserver(
-            function (entries, observer) {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        AppCodesStore.loadCodes();
-                        observer.unobserve(entry.target);
-                    }
-                });
-            });
+  /**
+   * Подписка на ивенты
+   */
+  #subscribeToEvents() {
+    AppEventMaker.subscribe(CodesStoreEvents.CODES_RECEIVED, this.#renderCodes);
+  }
 
-        observer.observe(this.#codesContainer.querySelector(".code-container:last-child"));
-    }
+  /**
+   * Отписка от ивентов
+   */
+  #unsubscribeFromEvents() {
+    AppEventMaker.subscribe(CodesStoreEvents.CODES_RECEIVED, this.#renderCodes);
+  }
 
-    /**
-     * Очистка мусора
-     */
-    remove() {
-        AppCodesStore.clean();
-        this.#codesEditor.remove();
-        this.#unsubscribeFromEvents();
-        super.remove();
-    }
+  /**
+   * Рендеринг страницы
+   */
+  render() {
+    this.parent.insertAdjacentHTML(
+      'afterbegin',
+      window.Handlebars.templates['codes.hbs'](this.config),
+    );
 
-    /**
-     * Срабатывает при клике по проекту
-     * @param code {HTMLElement}
-     */
-    selectCode = (code) => {
-        router.redirect("/codes1");
-        // AppCodesStore.unselectCode();
-        // AppCodesStore.fetchCode(code);
-        // code.classList.add("selected");
-    };
+    this.#codesContainer = document.querySelector('.codes-container');
 
-    /**
-     * Подписка на ивенты
-     */
-    #subscribeToEvents() {
-        AppEventMaker.subscribe(CodesStoreEvents.CODES_RECEIVED, this.#renderCodes);
-    }
+    this.#codesContainer.addEventListener('click', (e) => {
+      let id = undefined;
 
-    /**
-     * Отписка от ивентов
-     */
-    #unsubscribeFromEvents() {
-        AppEventMaker.subscribe(CodesStoreEvents.CODES_RECEIVED, this.#renderCodes);
-    }
+      if (e.target.matches('.code-container')) {
+        id = e.target.id;
+      } else if (e.target.matches('.code-container *')) {
+        id = e.target.parentNode.id;
+      }
 
-    /**
-     * Рендеринг страницы
-     */
-    render() {
-        this.parent.insertAdjacentHTML(
-            "afterbegin",
-            window.Handlebars.templates["codes.hbs"](this.config)
-        );
+      if (id !== undefined) {
+        this.self.classList.add('selected');
 
-        this.#codesContainer = document.querySelector(".codes-container");
+        this.selectCode(document.getElementById(id));
+      }
+    });
 
-        this.#codesContainer.addEventListener("click", (e) => {
-            let id = undefined;
+    this.#codesEditor = new CodeEditor(this.self, this.config.codeEditor);
+    this.#codesEditor.render();
 
-            if (e.target.matches(".code-container")) {
-                id = e.target.id;
-            } else if (e.target.matches(".code-container *")) {
-                id = e.target.parentNode.id;
-            }
+    document.title = 'Мои проекты';
+    this.#subscribeToEvents();
 
-            if (id !== undefined) {
-                this.self.classList.add("selected");
-
-                this.selectCode(document.getElementById(id));
-            }
-        });
-
-        this.#codesEditor = new CodeEditor(this.self, this.config.codeEditor);
-        this.#codesEditor.render();
-
-        document.title = "Мои проекты";
-        this.#subscribeToEvents();
-
-        AppCodesStore.init();
-    }
+    AppCodesStore.init();
+  }
 }

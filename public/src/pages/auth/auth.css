@@ -10,7 +10,7 @@
 .probuct-info {
     text-align: left; 
     width: 100%;     
-    padding-left: 80px;
+    padding-left: 200px;
     color: white;
 }
 
@@ -20,8 +20,10 @@
 
 .glassmorphism-container {
     position: absolute;
+    padding: 75px 75px 120px 75px;
     bottom: 0;
     left: 100;
+    padding-right: 200px;
     justify-content: right;
 }
 
@@ -29,12 +31,13 @@
     background: rgb(253, 252, 252);
     border: 2px solid rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(25px);
+    border-radius: 20px;
     box-shadow: 0 0px 15px rgba(0, 0, 0, 0.35);
     position: relative;
     justify-content: right;
-    width: 568px;
+    width: 500px;
     max-width: 100%;
-    min-height: 600px;
+    min-height: 450px;
     animation-duration: 1s;
     animation-fill-mode: both;
     animation-name: fadeIn;
@@ -56,6 +59,7 @@
     position: absolute;
     top: 0;
     height: 100%;
+    padding: 10px,10px,10px,10px;
     transition: all 0.6s ease-in-out;
     display: flex;
     justify-content: center;
@@ -63,7 +67,7 @@
 }
 
 #auth-page .auth-container .form-container form {
-    width: 300px;
+    width: 370px;
     height: 100%;
     display: flex;
     justify-content: center;
@@ -144,6 +148,7 @@
     width: 100%;
     z-index: 2;
     opacity: 1;
+    padding: 10px,10px,10px,10px;
 }
 
 @keyframes move_login1 {

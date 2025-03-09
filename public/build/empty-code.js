@@ -1,1 +1,0 @@
-(()=>{var e=Handlebars.template;(Handlebars.templates=Handlebars.templates||{})["empty-code.hbs"]=e({compiler:[8,">= 4.3.0"],main:function(e,a,t,n,r){return'<div class="empty-code-wrapper">\n\t<h3>Нет проектов</h3>\n</div>'},useData:!0})})();

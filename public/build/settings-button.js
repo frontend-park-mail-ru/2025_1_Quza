@@ -1,1 +1,0 @@
-(()=>{var t=Handlebars.template;(Handlebars.templates=Handlebars.templates||{})["settings-button.hbs"]=t({compiler:[8,">= 4.3.0"],main:function(t,e,s,i,a){return'<div id="settings-button">\n\t<div class="slider one"></div>\n\t<div class="slider two"></div>\n\t<div class="slider three"></div>\n</div>'},useData:!0})})();

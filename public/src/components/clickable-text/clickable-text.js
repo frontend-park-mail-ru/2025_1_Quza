@@ -1,87 +1,89 @@
-import "../../../build/clickable-text.js";
-import { router } from "../../modules/router.js";
-import {create_UUID} from "../../shared/uuid.js";
-import { AppCodesStore } from "../../stores/codes/codesStore.js";
+import '../../../build/clickable-text.js';
+import { create_UUID } from '../../shared/uuid.js';
+import { AppCodesStore } from '../../stores/codes/codesStore.js';
 
 /**
-     * Текст, на который можно нажать
-     */
+ * Текст, на который можно нажать
+ */
 export class Clickabletext {
-    #parent;
-    #props = {
-        id: "",
-        content: "",
-    };
-    #onSubmit;
+  #parent;
+  #props = {
+    id: '',
+    content: '',
+  };
+  #onSubmit;
 
-    /**
-     * Конструктор класса
-     * @param parent {HTMLElement} - родительский элемент
-     * @param config {Object} - пропсы
-     * @param onSubmit {Function} - колбэк-функция, срабатывающая при клике
-     * @param pageData {Function} - колбэк-функция, срабатывающая при клике
-     */
-    constructor(parent, onSubmit,content,pageData) {
-        this.id = create_UUID();
-        this.#parent = parent;
-        this.#props.id = this.id;
-        this.#props.content = content;
-        this.#onSubmit = onSubmit;
-        if (pageData!==undefined){
-        this.#props.projName=pageData.projName;
-        this.#props.data=pageData.data;
-        }
-        
-        console.log(this.#parent)
+  /**
+   * Конструктор класса
+   * @param parent {HTMLElement} - родительский элемент
+   * @param config {Object} - пропсы
+   * @param onSubmit {Function} - колбэк-функция, срабатывающая при клике
+   * @param pageData {Function} - колбэк-функция, срабатывающая при клике
+   */
+  constructor(parent, onSubmit, content, pageData) {
+    this.id = create_UUID();
+    this.#parent = parent;
+    this.#props.id = this.id;
+    this.#props.content = content;
+    this.#onSubmit = onSubmit;
+    if (pageData !== undefined) {
+      this.#props.projName = pageData.projName;
+      this.#props.data = pageData.data;
     }
 
-    /**
-     * Возвращает элемент кликабельного текста 
-     * @returns {HTMLElement}
-     */
-    get self(){
-        return document.getElementById(this.id);
-    }
+    console.log(this.#parent);
+  }
 
-    /**
-     * Подписка на событие клика по тексту
-     */
-    #addEventListeners(){
-            this.self.addEventListener("click", (e) => {
-                if (this.#onSubmit==="addBlock"){
-                AppCodesStore.addblock({projName:this.#props.projName,data:this.#props.data})
-                console.log("bfjdhsjln")
-                //router.redirect("/codes1");
-                }
-                e.preventDefault();
-            });
-    }
+  /**
+   * Возвращает элемент кликабельного текста
+   * @returns {HTMLElement}
+   */
+  get self() {
+    return document.getElementById(this.id);
+  }
 
-    /**
-     * Отписка от события клика по тексту
-     */
-    #removeEventListeners(){
-        if (this.#onSubmit !== undefined) {
-            this.self.removeEventListener("click", this.#onSubmit);
-        }
-    }
+  /**
+   * Подписка на событие клика по тексту
+   */
+  #addEventListeners() {
+    this.self.addEventListener('click', (e) => {
+      if (this.#onSubmit === 'addBlock') {
+        AppCodesStore.addblock({
+          projName: this.#props.projName,
+          data: this.#props.data,
+        });
+        console.log('bfjdhsjln');
+        //router.redirect("/codes1");
+      }
+      e.preventDefault();
+    });
+  }
 
-    /**
-     * Очистка
-     */
-    remove(){
-        this.#removeEventListeners();
+  /**
+   * Отписка от события клика по тексту
+   */
+  #removeEventListeners() {
+    if (this.#onSubmit !== undefined) {
+      this.self.removeEventListener('click', this.#onSubmit);
     }
+  }
 
-    /**
-     * Рендеринг компонента
-     */
-    render(){
-        this.#parent.insertAdjacentHTML(
-            "beforeend",
-            window.Handlebars.templates["clickable-text.hbs"](this.#props)
-        );
+  /**
+   * Очистка
+   */
+  remove() {
+    this.#removeEventListeners();
+  }
 
-        this.#addEventListeners();
-    }
+  /**
+   * Рендеринг компонента
+   */
+  render() {
+    this.#parent.insertAdjacentHTML(
+      'beforeend',
+      window.Handlebars.templates['clickable-text.hbs'](this.#props),
+    );
+
+    this.#addEventListeners();
+  }
 }

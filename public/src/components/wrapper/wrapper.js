@@ -1,37 +1,37 @@
-import "../../../build/wrapper.js";
+import '../../../build/wrapper.js';
 
 /**
-     * Разделение
-     */
+ * Разделение
+ */
 export class Wrapper {
-    #parent;
-    #config;
+  #parent;
+  #config;
 
-    /**
-     * Конструктор класса
-     * @param parent {HTMLElement} - родительский элемент
-     * @param config {Object} - пропсы
-     */
-    constructor(parent, config) {
-        this.#parent = parent;
-        this.#config = config;
-    }
+  /**
+   * Конструктор класса
+   * @param parent {HTMLElement} - родительский элемент
+   * @param config {Object} - пропсы
+   */
+  constructor(parent, config) {
+    this.#parent = parent;
+    this.#config = config;
+  }
 
-    /**
-     * Возвращает HTML элемент компонента
-     * @returns {HTMLElement}
-     */
-    get self() {
-        return document.getElementById(this.#config.id);
-    }
+  /**
+   * Возвращает HTML элемент компонента
+   * @returns {HTMLElement}
+   */
+  get self() {
+    return document.getElementById(this.#config.id);
+  }
 
-    /**
-     * Рендеринг компонента
-     */
-    render() {
-        this.#parent.insertAdjacentHTML(
-            "beforeend",
-            window.Handlebars.templates["wrapper.hbs"](this.#config)
-        );
-    }
+  /**
+   * Рендеринг компонента
+   */
+  render() {
+    this.#parent.insertAdjacentHTML(
+      'beforeend',
+      window.Handlebars.templates['wrapper.hbs'](this.#config),
+    );
+  }
 }

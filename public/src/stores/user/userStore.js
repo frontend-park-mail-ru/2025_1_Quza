@@ -2,6 +2,7 @@ import {AppDispatcher} from "../../modules/dispathcer.js";
 import {AppEventMaker} from "../../modules/eventMaker.js";
 import {UserStoreEvents} from "./events.js";
 import {router} from "../../modules/router.js";
+import {toasts} from "../../modules/toasts.js";
 
 /**
  * Константа, где указывается адрес сервера
@@ -104,8 +105,16 @@ class UserStore {
 
             if (!response.ok) {
                 const errorData = await this.parseError(response);
+
+                if (response.status === 401) {
+                    toasts.error("Ошибка регистрации", "Возможно, вы уже зарегистрированы");
+                } else {
+                    toasts.error("Ошибка регистрации", `Статус: ${response.status}`);
+                }
+
                 throw new Error(`Не удалось зарегистрировать: ${response.status} - ${JSON.stringify(errorData)}`);
             }
+
 
             AppEventMaker.notify(UserStoreEvents.SUCCESSFUL_REGISTER);
 
@@ -135,6 +144,13 @@ class UserStore {
 
             if (!response.ok) {
                 const errorData = await this.parseError(response);
+
+                if (response.status === 401) {
+                    toasts.error("Ошибка авторизации", "Неверный логин или пароль");
+                } else {
+                    toasts.error("Ошибка входа", `Статус: ${response.status}`);
+                }
+
                 throw new Error(`Ошибка входа: ${response.status} - ${JSON.stringify(errorData)}`);
             }
 
@@ -165,6 +181,13 @@ class UserStore {
 
             if (!response.ok) {
                 const errorData = await this.parseError(response);
+
+                if (response.status === 401) {
+                    toasts.error("Ошибка логаута", "Вы не авторизованы");
+                } else {
+                    toasts.error("Ошибка логаута", `Статус: ${response.status}`);
+                }
+
                 throw new Error(`Ошибка логаута: ${response.status} - ${JSON.stringify(errorData)}`);
             }
 
@@ -195,25 +218,37 @@ class UserStore {
                 this.#state.isAuth = true;
                 this.#state.username = data.email;
                 AppEventMaker.notify(UserStoreEvents.SUCCESSFUL_LOGIN);
+
             } else if (response.status === 401 && attempt < MAX_ATTEMPTS) {
-                const refreshed = await this.tryRefreshToken();
-                if (refreshed) {
-                    return await this.checkUser(attempt + 1);
+
+                if (this.#state.isAuth) {
+                    const refreshed = await this.tryRefreshToken();
+                    if (refreshed) {
+                        return await this.checkUser(attempt + 1);
+                    } else {
+                        this.#state.isAuth = false;
+
+                        toasts.error("Ошибка авторизации", "Сессия истекла. Войдите заново.");
+                    }
                 } else {
                     this.#state.isAuth = false;
                 }
+
             } else {
-                // Если статус не 200 и не 401 (либо попытки исчерпаны), обрабатываем ошибку
-                // если нужно бросить исключение, можно сделать это здесь
                 this.#state.isAuth = false;
+                toasts.error("Ошибка", `Проверка профиля вернула статус: ${response.status}`);
             }
+
         } catch (err) {
             console.error(err);
             this.#state.isAuth = false;
+            toasts.error("Ошибка сети", "Не удалось связаться с сервером");
         } finally {
             AppEventMaker.notify(UserStoreEvents.USER_CHECKED);
         }
     }
+
+
 
     /**
      * Попытка обновления токенов через refresh-токен.
@@ -227,7 +262,7 @@ class UserStore {
                     "Content-Type": "application/json",
                 },
                 credentials: "include",
-                body: JSON.stringify({}),
+                body: null,
             });
 
             if (!response.ok) {

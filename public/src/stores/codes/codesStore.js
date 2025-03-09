@@ -3,6 +3,9 @@ import {CodesStoreEvents} from "./events.js";
 import {CodeEvents} from "../../pages/codes/events.js";
 import { router } from "../../modules/router.js";
 
+
+const HOST = "http://localhost:8080";
+
 /**
      * Хранилище всего, что связано с проектами
      */
@@ -53,7 +56,7 @@ class CodesStore {
      * Инициализация всех проектов   
      * Запрос к серверу, сервер возвращает ответ и сохраняет в #codes   */
     init() {
-            fetch("http://localhost:8080/file") 
+            fetch(`${HOST}/file`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error("Network response was not ok");
@@ -77,7 +80,7 @@ class CodesStore {
          */
         async addblock(credentials) {
             try {
-                await fetch("/file", {
+                await fetch(`${HOST}/file`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"

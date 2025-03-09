@@ -81,7 +81,7 @@ header .right-container5 {
 }
 
 header .right-container5 #clickable-text {
-    color: red;
+    color: #ff9494;
 }
 
 header .search-bar {
@@ -90,6 +90,7 @@ header .search-bar {
     position: absolute;
     top: 7.5px;
     right: 250px;
+    width: 350px;
 }
 
 header .menu-container {

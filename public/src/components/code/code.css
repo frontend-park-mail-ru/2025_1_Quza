@@ -38,6 +38,14 @@
 }
 .code-container .content {
     position: absolute;
-    right: 10px;
+    right: 70px;
     color: var(--text-main-color--darker);
+}
+.code-container .file-icon {
+    height: 30px;
+}
+.code-container .file-icon img {
+    height: 30px;
+    padding-left: 5px;
+    padding-top: 5px;
 }

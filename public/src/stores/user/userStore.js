@@ -4,11 +4,15 @@ import {UserStoreEvents} from "./events.js";
 import {router} from "../../modules/router.js";
 
 /**
+ * Константа, где указывается адрес сервера
+ */
+const HOST = "http://localhost:8080";
+
+/**
  * Хранилище для пользователей
  */
 class UserStore {
     #state;
-
 
     /**
      * Конструктор класса
@@ -24,9 +28,9 @@ class UserStore {
     /**
      * Регистрирует ивенты
      */
-    registerEvents(){
+    registerEvents() {
         AppDispatcher.register(async (action) => {
-            switch (action.type){
+            switch (action.type) {
                 case UserActions.LOGIN:
                     await this.login(action.payload);
                     break;
@@ -69,35 +73,45 @@ class UserStore {
     }
 
     /**
+     * Вспомогательный метод для парсинга ошибок в JSON
+     * (если парсинг в JSON не удаётся, то возвращаем текст).
+     */
+    async parseError(response) {
+        try {
+            return await response.json();
+        } catch (e) {
+            return await response.text();
+        }
+    }
+
+    /**
      * Регистрирует пользователя.
      * устанавливаем cookies.
      */
     async register(credentials) {
-        console.log("Register credentials:", credentials);
-
         try {
-            const response = await fetch("http://localhost:8080/auth/signup", {
+            const response = await fetch(`${HOST}/auth/signup`, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
                 },
                 credentials: "include",
                 body: JSON.stringify({
                     email: credentials.login,
-                    password: credentials.password
-                })
+                    password: credentials.password,
+                }),
             });
 
             if (!response.ok) {
-                const errorText = await response.text();
-                throw new Error(`Не удалось зарегистрировать: ${response.status} - ${errorText}`);
+                const errorData = await this.parseError(response);
+                throw new Error(`Не удалось зарегистрировать: ${response.status} - ${JSON.stringify(errorData)}`);
             }
 
             AppEventMaker.notify(UserStoreEvents.SUCCESSFUL_REGISTER);
 
             await this.login({ login: credentials.login, password: credentials.password });
         } catch (err) {
-            console.error("[register] error:", err);
+            console.error(err);
         }
     }
 
@@ -105,23 +119,23 @@ class UserStore {
      * Авторизация пользователя.
      * устанавливаем HttpOnly cookies с access и refresh токенами.
      */
-    async login(credentials){
+    async login(credentials) {
         try {
-            const response = await fetch("http://localhost:8080/auth/login", {
+            const response = await fetch(`${HOST}/auth/login`, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
                 },
                 credentials: "include",
                 body: JSON.stringify({
                     email: credentials.login,
-                    password: credentials.password
-                })
+                    password: credentials.password,
+                }),
             });
 
             if (!response.ok) {
-                const errorText = await response.text();
-                throw new Error(`Ошибка входа: ${response.status} - ${errorText}`);
+                const errorData = await this.parseError(response);
+                throw new Error(`Ошибка входа: ${response.status} - ${JSON.stringify(errorData)}`);
             }
 
             this.#state.isAuth = true;
@@ -130,7 +144,7 @@ class UserStore {
             router.redirect("/codes");
             AppEventMaker.notify(UserStoreEvents.SUCCESSFUL_LOGIN);
         } catch (err) {
-            console.error("[login] error:", err);
+            console.error(err);
         }
     }
 
@@ -140,18 +154,18 @@ class UserStore {
      */
     async logout() {
         try {
-            const response = await fetch("http://localhost:8080/auth/logout", {
+            const response = await fetch(`${HOST}/auth/logout`, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
                 },
                 credentials: "include",
-                body: JSON.stringify({})
+                body: JSON.stringify({}),
             });
 
             if (!response.ok) {
-                const errorText = await response.text();
-                throw new Error(`Ошибка логаута: ${response.status} - ${errorText}`);
+                const errorData = await this.parseError(response);
+                throw new Error(`Ошибка логаута: ${response.status} - ${JSON.stringify(errorData)}`);
             }
 
             this.#state.isAuth = false;
@@ -160,7 +174,7 @@ class UserStore {
             router.redirect("/");
             AppEventMaker.notify(UserStoreEvents.LOGOUT);
         } catch (err) {
-            console.error("[logout] error:", err);
+            console.error(err);
         }
     }
 
@@ -168,11 +182,12 @@ class UserStore {
      * Проверка авторизации пользователя.
      * Запрос отправляется с cookies, сервер проверяет их и возвращает профиль пользователя.
      */
-    async checkUser() {
+    async checkUser(attempt = 0) {
+        const MAX_ATTEMPTS = 3;
         try {
-            const response = await fetch("http://localhost:8080/user/profile", {
+            const response = await fetch(`${HOST}/user/profile`, {
                 method: "GET",
-                credentials: "include"
+                credentials: "include",
             });
 
             if (response.ok) {
@@ -180,20 +195,20 @@ class UserStore {
                 this.#state.isAuth = true;
                 this.#state.username = data.email;
                 AppEventMaker.notify(UserStoreEvents.SUCCESSFUL_LOGIN);
-            } else if (response.status === 401) {
-                console.log("Профиль недоступен (401). Попробуем refresh-токен...");
+            } else if (response.status === 401 && attempt < MAX_ATTEMPTS) {
                 const refreshed = await this.tryRefreshToken();
                 if (refreshed) {
-                    return await this.checkUser();
+                    return await this.checkUser(attempt + 1);
                 } else {
                     this.#state.isAuth = false;
                 }
             } else {
-                console.log("Профиль недоступен:", response.status);
+                // Если статус не 200 и не 401 (либо попытки исчерпаны), обрабатываем ошибку
+                // если нужно бросить исключение, можно сделать это здесь
                 this.#state.isAuth = false;
             }
         } catch (err) {
-            console.log("[checkUser] error:", err);
+            console.error(err);
             this.#state.isAuth = false;
         } finally {
             AppEventMaker.notify(UserStoreEvents.USER_CHECKED);
@@ -206,23 +221,24 @@ class UserStore {
      */
     async tryRefreshToken() {
         try {
-            const response = await fetch("http://localhost:8080/auth/refresh", {
+            const response = await fetch(`${HOST}/auth/refresh`, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
                 },
                 credentials: "include",
-                body: JSON.stringify({})
+                body: JSON.stringify({}),
             });
 
             if (!response.ok) {
-                console.log("Не удалось обновить токены:", response.status);
+                const errorData = await this.parseError(response);
+                console.error("Ошибка при рефреше токена:", errorData);
                 return false;
             }
 
             return true;
         } catch (err) {
-            console.log("[tryRefreshToken] error:", err);
+            console.error(err);
             return false;
         }
     }
@@ -235,5 +251,5 @@ export const UserActions = {
     REGISTER: "REGISTER",
     LOGOUT: "LOGOUT",
     CHANGE_PAGE: "CHANGE_PAGE",
-    CHECK_USER: "CHECK_USER"
+    CHECK_USER: "CHECK_USER",
 };

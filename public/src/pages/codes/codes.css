@@ -4,7 +4,7 @@
     display: flex;
     justify-content: center;
     gap: 25px;
-    padding: 125px 0px 0px 0px;
+    padding: 60px 0px 0px 0px;
     background: var(--background-main-color);
     overflow: hidden;
 }
@@ -17,7 +17,7 @@
 
 
 .codes-container {
-    padding: 15px 15px 40px 15px;
+    padding: 15px 45px 40px 45px;
     border-radius: 15px;
     width: 2000px;
     background-color: aliceblue;
@@ -33,13 +33,18 @@
 }
 .codes-container .data-container .update-time {
     position: absolute;
-    right: 250px;
+    right: 310px;
     font-weight: 900;
     color: black;
 }
+
+.codes-container .data-container h3 {
+    padding-left: 12.5px;
+}
+
 .codes-container .data-container .content {
     position: absolute;
-    right: 10px;
+    right: 50px;
     font-weight: 900;
     color: black;
 }

@@ -39,6 +39,7 @@ class Router {
     const authPage = new AuthPage(root, config.authPage);
     this.registerPage('/login', authPage);
     this.registerPage('/register', authPage);
+    this.registerPage('/',authPage)
 
     const notFoundPage = new NotFoundPage(root, config.notFoundPage);
     this.registerPage('/404', notFoundPage);

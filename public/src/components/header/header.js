@@ -217,6 +217,7 @@ export class Header {
       if (href === '/codes') {
         if (this.#clickabletextFiles1 === undefined) {
           //this.#clickabletextFiles1 = new Clickabletext(document.querySelector(".right-container1"), this.validateData,"Создать");
+          document.querySelector('.right-container1').setAttribute('style', `top: ${10}px; left: ${200}px;`);
           this.#clickabletextFiles1 = new Button(
             document.querySelector('.right-container1'),
             { text: 'Создать' },
@@ -225,15 +226,18 @@ export class Header {
           this.#clickabletextFiles1.render();
         }
         if (this.#clickabletextFiles2 === undefined) {
+            document.querySelector('.right-container2').setAttribute('style', `top: ${10}px; left: ${330}px;`);
           this.#clickabletextFiles2 = new Button(
             document.querySelector('.right-container2'),
             { text: 'Загрузить' },
             this.handleButtonClickCreate,
           );
           this.#clickabletextFiles2.render();
+          document.querySelector('.right-container2').querySelector('.submit-btn').setAttribute('style', `background-color: #90bce9;`);
         }
       } else {
         if (this.#clickabletextFiles1 !== undefined) {
+            document.querySelector('.right-container1').setAttribute('style', `top: ${80}px; left: ${50}px;`);
           document
             .querySelector('.right-container1')
             .removeChild(
@@ -244,6 +248,7 @@ export class Header {
           this.#clickabletextFiles1 = undefined;
         }
         if (this.#clickabletextFiles2 !== undefined) {
+            document.querySelector('.right-container2').setAttribute('style', `top: ${80}px; left: ${150}px;`);
           document
             .querySelector('.right-container2')
             .removeChild(

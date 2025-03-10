@@ -15,17 +15,14 @@
 }
 
 
-.code-container h3 {
-    color: var(--text-main-color--darker);
+.code-container p {
+    color: #1e1e20;
     position: absolute;
     left: 35px;
     top: 5px;
     padding-bottom: 9px;
 }
 
-.code-container p {
-    color: var(--text-main-color--darker);
-}
 
 .code-container.selected {
     box-shadow: 0 0 5px var(--primary-color),
@@ -35,12 +32,12 @@
 .code-container .update-time {
     position: absolute;
     right: 250px;
-    color: var(--text-main-color--darker);
+    color: #1e1e20;
 }
 .code-container .content {
     position: absolute;
     right: 70px;
-    color: var(--text-main-color--darker);
+    color: #1e1e20;
 }
 .code-container .file-icon {
     height: 30px;
@@ -50,6 +47,6 @@
     padding-left: 5px;
     padding-top: 5px;
     position: absolute;
-    top: 5px;
+    top: 2px;
     left: 10px;
 }

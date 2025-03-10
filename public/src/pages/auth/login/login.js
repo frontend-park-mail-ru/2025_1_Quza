@@ -154,20 +154,26 @@ export class LoginForm {
         );
 
         var RegLink = {
-            text:"Регистрация",
-            href:"/register",
-        }
-        this.#RegLink = new Link(this.self, RegLink);
-        this.#RegLink.render();
-
-        this.#loginInput = new Input(this.self, this.#config.inputs.login);
-        this.#loginInput.render();
-
-        this.#passwordInput = new Input(this.self, this.#config.inputs.password);
-        this.#passwordInput.render();
-
-        this.#submitBtn = new Button(this.self, this.#config.buttons.submitBtn, this.validateData);
-        this.#submitBtn.render();
+            text: 'Регистрация',
+            href: '/register',
+            preText: 'Нет аккаунта? ',
+          };
+      
+          this.#loginInput = new Input(this.self, this.#config.inputs.login);
+          this.#loginInput.render();
+      
+          this.#passwordInput = new Input(this.self, this.#config.inputs.password);
+          this.#passwordInput.render();
+      
+          this.#submitBtn = new Button(
+            this.self,
+            this.#config.buttons.submitBtn,
+            this.validateData,
+          );
+          this.#submitBtn.render();
+      
+          this.#RegLink = new Link(this.self, RegLink);
+          this.#RegLink.render();
 
         this.#subscribeToEvents();
     }

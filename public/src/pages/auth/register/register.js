@@ -202,23 +202,32 @@ export class RegisterForm {
         );
 
         var LogLink = {
-            text:"Войти",
-            href:"/login",
-        }
-        this.#LogLink = new Link(this.self, LogLink);
-        this.#LogLink.render();
-
-        this.#loginInput = new Input(this.self, this.#config.inputs.login);
-        this.#loginInput.render();
-
-        this.#passwordInput = new Input(this.self, this.#config.inputs.password);
-        this.#passwordInput.render();
-
-        this.#repeatPasswordInput = new Input(this.self, this.#config.inputs.repeatPassword);
-        this.#repeatPasswordInput.render();
-
-        this.#submitBtn = new Button(this.self, this.#config.buttons.submitBtn, this.validateData);
-        this.#submitBtn.render();
+            text: 'Войти',
+            href: '/login',
+            preText: 'Уже есть аккаунт? ',
+          };
+      
+          this.#loginInput = new Input(this.self, this.#config.inputs.login);
+          this.#loginInput.render();
+      
+          this.#passwordInput = new Input(this.self, this.#config.inputs.password);
+          this.#passwordInput.render();
+      
+          this.#repeatPasswordInput = new Input(
+            this.self,
+            this.#config.inputs.repeatPassword,
+          );
+          this.#repeatPasswordInput.render();
+      
+          this.#submitBtn = new Button(
+            this.self,
+            this.#config.buttons.submitBtn,
+            this.validateData,
+          );
+          this.#submitBtn.render();
+      
+          this.#LogLink = new Link(this.self, LogLink);
+          this.#LogLink.render();
 
         this.#subscribeToEvents();
     }

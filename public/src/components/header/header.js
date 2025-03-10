@@ -237,7 +237,7 @@ export class Header {
         }
       } else {
         if (this.#clickabletextFiles1 !== undefined) {
-            document.querySelector('.right-container1').setAttribute('style', `top: ${70}px; left: ${100}px;`);
+            document.querySelector('.right-container1').setAttribute('style', `top: ${80}px; left: ${50}px;`);
           document
             .querySelector('.right-container1')
             .removeChild(
@@ -248,7 +248,7 @@ export class Header {
           this.#clickabletextFiles1 = undefined;
         }
         if (this.#clickabletextFiles2 !== undefined) {
-            document.querySelector('.right-container2').setAttribute('style', `top: ${70}px; left: ${200}px;`);
+            document.querySelector('.right-container2').setAttribute('style', `top: ${80}px; left: ${150}px;`);
           document
             .querySelector('.right-container2')
             .removeChild(

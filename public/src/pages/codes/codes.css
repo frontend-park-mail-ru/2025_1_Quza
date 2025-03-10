@@ -33,10 +33,15 @@
 }
 .codes-container .data-container .update-time {
     position: absolute;
-    right: 300px;
+    right: 310px;
     font-weight: 900;
     color: black;
 }
+
+.codes-container .data-container h3 {
+    padding-left: 12.5px;
+}
+
 .codes-container .data-container .content {
     position: absolute;
     right: 50px;

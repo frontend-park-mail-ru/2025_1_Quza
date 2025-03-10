@@ -1,0 +1,16 @@
+.text-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #cccccc6d;
+    padding: 15px 15px 15px 15px;
+    width: 100%;
+    transition: 0.5s;
+    position: relative;
+    margin-top: 1%;
+
+}
+
+.text-container p {
+    color:black;
+}

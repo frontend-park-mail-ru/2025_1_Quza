@@ -1,0 +1,111 @@
+#auth-container{
+    width: 450px;
+    position: fixed;
+    right: 200px;
+    bottom: 100px;
+    padding: 75px 75px 100px 75px;
+    left: 100;
+    justify-content: right;
+    background: rgb(253, 252, 252);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(25px);
+    border-radius: 20px;
+    box-shadow: 0 0px 15px rgba(0, 0, 0, 0.35);
+    justify-content: right;
+    animation-duration: 1s;
+    animation-fill-mode: both;
+    animation-name: fadeIn;
+    overflow: hidden;
+    z-index: 10;
+}
+.probuct-info {
+    position: fixed;
+    top: 100px;
+    text-align: left; 
+    width: 100%;     
+    padding-left: 350px;
+    color: white;
+}
+
+.probuct-info h1 {
+    font-weight: bold;
+}
+#register_page{
+    position: fixed;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #222226;
+}
+
+input {
+    width: 100%;
+    padding: 12px 12px 12px 12px;
+    outline: none;
+    border-radius: 6px;
+    transition: 0.3s;
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(20, 15, 15, 0.721);
+}
+
+#errors-container1,#errors-container2,#errors-container3{
+    height: 20px;
+    width: 300px;
+    color: #c92432;
+    font-size: 13px;
+    padding: 0 10px;
+}
+
+#errors-container2{
+    height: 50px;
+    width: 250px;
+    color: #c92432;
+    font-size: 13px;
+    padding: 0 10px;
+}
+
+.submit-btn{
+    width: 300px;
+    font-size: 20px;
+    min-width: 220px;
+    background: #007fff;
+    border-radius: 20px;
+    color: white;
+    cursor: pointer;
+    line-height: 24px;
+    outline: 0 solid transparent;
+    padding: 12px 18px;
+    user-select: none;
+    border: 0;
+}
+#reg-word{
+    text-align: center;
+}
+.link-container{
+    text-align: center;
+}
+.show-password{
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    top: 208px;
+    right: 80px;
+    cursor: pointer;
+    filter: invert(85%);
+    transition: 0.5s ease;
+}
+.show-password1{
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    top: 298px;
+    right: 80px;
+    cursor: pointer;
+    filter: invert(85%);
+    transition: 0.5s ease;
+}
+a {
+    cursor: pointer;
+    color: #007fff;
+}

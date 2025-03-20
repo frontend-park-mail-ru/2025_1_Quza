@@ -1,65 +1,41 @@
-const fs = require('fs');
-const http = require('http');
+'use strict';
+
+const express = require('express');
+const body = require('body-parser');
+const cookie = require('cookie-parser');
+const morgan = require('morgan');
+const uuid = require('uuid').v4;
 const path = require('path');
-const SERVER_PORT = 3000;
+const app = express();
 
-const mimeTypes = {
-  '.html': 'text/html',
-  '.css': 'text/css',
-  '.js': 'text/javascript',
-  '.png': 'image/png',
-  '.jpg': 'image/jpeg',
-  '.gif': 'image/gif',
-  '.svg': 'image/svg+xml',
-  '.ico': 'image/x-icon',
-  '.json': 'application/json',
-  '.mp3': 'audio/mpeg',
-  '.mp4': 'video/mp4',
-  '.txt': 'text/plain',
-  '.pdf': 'application/pdf',
-  '.doc': 'application/msword',
-  '.docx':
-    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-  '.xls': 'application/vnd.ms-excel',
-  '.xlsx': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-  woff: 'application/font-woff',
-  woff2: 'application/font-woff2',
-  ttf: 'application/font-ttf',
-  eot: 'application/vnd.ms-fontobject',
-  otf: 'application/font-otf',
-  swf: 'application/x-shockwave-flash',
-  wasm: 'application/wasm',
-};
+app.use(morgan('dev'));
+app.use(express.static(path.resolve(__dirname, '..', 'dist')));
+app.use(express.static(path.resolve(__dirname, '..', 'src')));
+app.use(express.static(path.resolve(__dirname, 'images')));
+app.use(express.static(path.resolve(__dirname, '..', 'node_modules')));
+app.use(body.json());
+app.use(cookie());
 
-/**
- * Получение статики
- */
-const staticFile = (res, filePath, ext) => {
-  res.setHeader('Content-Type', mimeTypes[ext]);
-  fs.readFile('./public' + filePath, (error, data) => {
-    if (error) {
-      res.statusCode = 404;
-      res.end();
-    }
+const users = [];
 
-    res.end(data);
-  });
-};
+const sessions = new Map();
 
-/**
- * Инициализация сервера
- */
-const server = http.createServer((req, res) => {
-  const { url } = req;
-
-  const extname = String(path.extname(url)).toLocaleLowerCase();
-  if (extname in mimeTypes) {
-    staticFile(res, url, extname);
-  } else {
-    staticFile(res, '/index.html', '.html');
-  }
+app.get('/signup', (req, res) => {
+    return res.sendFile(path.resolve(__dirname, '..', 'dist', 'index.html'));
 });
 
-server.listen(SERVER_PORT);
-console.log('Server listening 3000');
-console.log('http://localhost:3000');
+app.get('/login', (req, res) => {
+    return res.sendFile(path.resolve(__dirname, '..', 'dist', 'index.html'));
+});
+
+
+app.get('/register', (req, res) => {
+    return res.sendFile(path.resolve(__dirname, '..', 'dist', 'index.html'));
+});
+
+
+const port = process.env.PORT || 4000;
+
+app.listen(port, function () {
+    console.log(`Server listening port ${port}`);
+});

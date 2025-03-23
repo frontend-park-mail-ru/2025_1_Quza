@@ -27,6 +27,14 @@ export class Controller {
             case VIEW_EVENT_TYPE.AUTH:
                 await model.userModel.auth();
                 break;
+            case VIEW_EVENT_TYPE.USER_UPDATE:
+                await model.userModel.updateUser(
+                    (
+                        event.data as {
+                            userFields: { [index: string]: string };
+                        }
+                    ).userFields,
+                );
             case VIEW_EVENT_TYPE.LOGOUT:
                 await model.userModel.logout();
                 break;

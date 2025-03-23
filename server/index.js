@@ -33,6 +33,9 @@ app.get('/register', (req, res) => {
     return res.sendFile(path.resolve(__dirname, '..', 'dist', 'index.html'));
 });
 
+app.get('/profile1', (req, res) => {
+    return res.sendFile(path.resolve(__dirname, '..', 'dist', 'index.html'));
+});
 
 const port = process.env.PORT || 4000;
 

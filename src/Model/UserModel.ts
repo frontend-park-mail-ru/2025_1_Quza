@@ -86,6 +86,16 @@ export class UserModel implements Listenable<UserEvent> {
         }
     }
 
+    /**
+     * Обновление данных пользователя
+     * @async
+     */
+    async updateUser(newUserData: { [index: string]: string }) {
+        this.user!.Password = newUserData.Password || this.user!.Password;
+        console.log(this.user)
+        //this.events.notify(UserEvent.USER_UPDATE);
+    }
+
     async createUser(user: User) {
         console.log("register: "+user)
         try {

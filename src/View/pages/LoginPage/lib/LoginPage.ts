@@ -1,4 +1,3 @@
-import { Navbar } from "../../../widgets/Navbar/index";
 import MainTemplate from "../ui/LoginView.hbs";
 import "../ui/LoginView.scss";
 import { Page } from "../../..//types.d";
@@ -7,7 +6,6 @@ import { UIEvent, UIEventType } from "../../../../config";
 import { validateEmail, validatePassword, validatePasswordConfirm, validateUsername } from "../../../../modules/validations";
 import { VIEW_EVENT_TYPE } from "../../../../Controller/Controller";
 export class LoginPage extends Page implements Listenable<UIEvent> {
-    private navbar: Navbar;
     private authButton: HTMLElement;
     private closeButton: HTMLElement;
     private backButton: HTMLElement;
@@ -83,6 +81,7 @@ export class LoginPage extends Page implements Listenable<UIEvent> {
                                     password: this.passwordInput.value.trim(),
                                 },
                             });
+                            this.events.notify({ type: UIEventType.NAVBAR_NAME_CLICK });
             } else {
                 this.emailMessageBox.innerText = emailValidation;
                 this.passwordMessageBox.innerText = passwordValidation;

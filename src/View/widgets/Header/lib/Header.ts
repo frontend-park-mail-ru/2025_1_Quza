@@ -3,10 +3,10 @@ import { UserEvent } from "../../../../Model/UserModel";
 import { UIEvent, UIEventType } from "../../../../config";
 import { EventDispatcher, Listenable } from "../../../../modules/observer";
 import { IWidget } from "../../../types";
-import navbarTemplate from "../ui/Navbar.hbs";
-import "../ui/Navbar.scss";
+import headerTemplate from "../ui/Header.hbs";
+import "../ui/Header.scss";
 
-export class Navbar extends IWidget implements Listenable<UIEvent> {
+export class Header extends IWidget implements Listenable<UIEvent> {
     private userNameElement: HTMLElement;
     private signInButton: HTMLElement;
 
@@ -16,7 +16,7 @@ export class Navbar extends IWidget implements Listenable<UIEvent> {
     }
 
     constructor() {
-        super(navbarTemplate(), ".navbar");
+        super(headerTemplate(), ".header");
         this.events_ = new EventDispatcher<UIEvent>();
 
         model.userModel.events.subscribe(this.update.bind(this));

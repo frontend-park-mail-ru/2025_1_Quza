@@ -9,12 +9,14 @@ import { VIEW_EVENT_TYPE } from "../../Controller/Controller";
 import favIconImg from "../../../public/main_icon.ico";
 import { RegisterPage } from "../pages/RegisterPage";
 import { LoginPage } from "../pages/LoginPage";
+import { ProfilePage1 } from "../pages/Profile1Page";
 
 export class View {
     private root: HTMLElement;
     private mainPage: MainPage;
     private registerPage: RegisterPage;
     private loginPage: LoginPage;
+    private profilePage1: ProfilePage1;
     private router_: Router;
     constructor() {
         this.root = <HTMLElement>document.querySelector("#root")!;
@@ -32,12 +34,16 @@ export class View {
         this.registerPage = new RegisterPage();
         this.registerPage.events.subscribe(this.updateUIEvent.bind(this));
 
+        this.profilePage1=new ProfilePage1()
+        this.profilePage1.events.subscribe(this.updateUIEvent.bind(this));
+
         this.loginPage = new LoginPage();
         this.loginPage.events.subscribe(this.updateUIEvent.bind(this));
 
         const routes = new Map<string, Page>([
             [ROUTES.register, this.registerPage],
             [ROUTES.login, this.loginPage],
+            [ROUTES.profile1, this.profilePage1],
         ]);
 
         this.router_ = new Router(routes, this.root);
@@ -68,7 +74,7 @@ export class View {
                 this.router_.redirect(ROUTES.register);
                 break;
             case UIEventType.NAVBAR_NAME_CLICK:
-                this.router_.redirect(ROUTES.profile);
+                this.router_.redirect(ROUTES.profile1);
                 break
             default:
                 break;

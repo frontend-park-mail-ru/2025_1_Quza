@@ -41,4 +41,5 @@ export enum ROUTES {
     default = "/",
     profile = "/me",
     register = "/register",
+    profile1="/profile1"
 }

@@ -1,4 +1,3 @@
-import { Navbar } from "../../../widgets/Navbar/index";
 import MainTemplate from "../ui/RegisterView.hbs";
 import "../ui/RegisterView.scss";
 import { Page } from "../../..//types.d";
@@ -8,7 +7,6 @@ import { validateEmail, validatePassword, validatePasswordConfirm } from "../../
 import { VIEW_EVENT_TYPE } from "../../../../Controller/Controller";
 import { Router } from "../../../app/Router";
 export class RegisterPage extends Page implements Listenable<UIEvent> {
-    private navbar: Navbar;
     private authButton: HTMLElement;
     private closeButton: HTMLElement;
     private backButton: HTMLElement;

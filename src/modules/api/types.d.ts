@@ -1,9 +1,3 @@
-enum ERROR_TYPE {
-    FAILURE,
-    NETWORK_ERROR,
-    UNEXPECTED,
-}
-
 type ApiElementConfig = {
     url: string;
     params: (body: string) => RequestInit;

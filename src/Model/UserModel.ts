@@ -1,9 +1,8 @@
-import { router } from "yandex-maps";
 import { apiConfig } from "../modules/api";
 import { Api } from "../modules/api/src/api";
 import { EventDispatcher, Listenable } from "../modules/observer";
 
-export type User = {
+export interface User {
     Username: string;
     Email: string;
     Password: string;
@@ -44,13 +43,15 @@ export class UserModel implements Listenable<UserEvent> {
 
     usersDiff(newUserData: { [index: string]: string }, oldUser: User | null) {
         const userDiff = {};
-        if (oldUser) {
-            for (const [key, value] of Object.entries(oldUser)) {
+        if (!oldUser) {
+            return;
+        }
+            
+       for (const [key, value] of Object.entries(oldUser)) {
                 if (newUserData[key] && newUserData[key] !== value) {
                     userDiff[key] = newUserData[key];
                 }
-            }
-        }
+       }
 
         return userDiff;
     }

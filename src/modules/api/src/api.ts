@@ -2,13 +2,13 @@ import { User } from "../../../Model/UserModel";
 import { apiConfig } from "./config";
 import { REQUEST_METHOD } from "./config";
 
-enum ERROR_TYPE {
+const enum ERROR_TYPE {
     FAILURE,
     NETWORK_ERROR,
     UNEXPECTED,
 }
 
-type ApiElementConfig = {
+interface ApiElementConfig {
     url: string;
     params: (body: string | FormData) => RequestInit;
     success: { [index: number]: string };
@@ -16,19 +16,19 @@ type ApiElementConfig = {
     restrictions: { [index: string]: string };
 };
 
-type ApiConfig = {
+interface ApiConfig {
     backend: string;
     api: { [index: string]: ApiElementConfig };
 };
 
-type LoginData = {
+interface LoginData {
     username: string;
     password: string;
 };
 
-type SignUpData = LoginData & {
+interface SignUpData extends LoginData {
     email: string;
-};
+}
 class RequestError {
     type: ERROR_TYPE;
     status: number;

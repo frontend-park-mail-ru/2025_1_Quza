@@ -7,20 +7,20 @@ import { validatePassword, validatePasswordConfirm } from "../../../../modules/v
 import { VIEW_EVENT_TYPE } from "../../../../Controller/Controller";
 import { Header } from "../../../widgets/Header";
 export class ProfilePage1 extends Page implements Listenable<UIEvent> {
-        private authButton: HTMLElement;
-        private emailInput: HTMLInputElement;
-        private usernameMessageBox: HTMLElement;
-        private bankInput: HTMLInputElement;
-        private passwordMessageBox: HTMLElement;
-        private passwordInput: HTMLInputElement;
-        private passwordConfirmMessageBox: HTMLElement;
-        private passwordConfirmInput: HTMLInputElement;
-        private showButton: HTMLElement;
-        private showButton1: HTMLElement;
-        private downloadPhoto: HTMLInputElement;
-        private toLogin: HTMLElement;
-    
-        private form: HTMLFormElement;
+    private authButton: HTMLElement;
+    private emailInput: HTMLInputElement;
+    private usernameMessageBox: HTMLElement;
+    private bankInput: HTMLInputElement;
+    private passwordMessageBox: HTMLElement;
+    private passwordInput: HTMLInputElement;
+    private passwordConfirmMessageBox: HTMLElement;
+    private passwordConfirmInput: HTMLInputElement;
+    private showButton: HTMLElement;
+    private showButton1: HTMLElement;
+    private downloadPhoto: HTMLInputElement;
+    private toLogin: HTMLElement;
+
+    private form: HTMLFormElement;
 
     private header: Header;
 
@@ -71,56 +71,56 @@ export class ProfilePage1 extends Page implements Listenable<UIEvent> {
         this.downloadPhoto.addEventListener('change', function(event) {
             console.log(event.target!.files[0])
             });
-                this.form.addEventListener("submit", (event: Event) => {
-                    event.preventDefault();
-                    console.log("form submit")
-                                const passwordValidation = validatePassword(
-                                    this.passwordInput.value.trim(),
-                                );
-                                const passwordConfirmValidation = validatePasswordConfirm(
-                                    this.passwordInput.value.trim(),
-                                    this.passwordConfirmInput.value.trim(),
-                                );
+        this.form.addEventListener("submit", (event: Event) => {
+            event.preventDefault();
+            console.log("form submit")
+                        const passwordValidation = validatePassword(
+                            this.passwordInput.value.trim(),
+                        );
+                        const passwordConfirmValidation = validatePasswordConfirm(
+                            this.passwordInput.value.trim(),
+                            this.passwordConfirmInput.value.trim(),
+                        );
                     
-                                if (
-                                    !passwordValidation &&
-                                    !passwordConfirmValidation
-                                ) {
-                                    console.log("sucess")
-                                    controller.handleEvent({
-                                                    type: VIEW_EVENT_TYPE.USER_UPDATE,
-                                                    data: {
-                                                        userFields: {
-                                                            Password: this.passwordInput.value.trim()
-                                                        },
-                                                    },
-                                                });
-                                } else {
-                                    this.passwordMessageBox.innerText = passwordValidation;
-                                    this.passwordConfirmMessageBox.innerText = passwordConfirmValidation;
-                                }
-                });
+                        if (
+                            !passwordValidation &&
+                            !passwordConfirmValidation
+                        ) {
+                            console.log("sucess")
+                            controller.handleEvent({
+                                            type: VIEW_EVENT_TYPE.USER_UPDATE,
+                                            data: {
+                                                userFields: {
+                                                    Password: this.passwordInput.value.trim()
+                                                },
+                                            },
+                                        });
+                        } else {
+                            this.passwordMessageBox.innerText = passwordValidation;
+                            this.passwordConfirmMessageBox.innerText = passwordConfirmValidation;
+                        }
+        });
         
-                this.authButton.addEventListener("click", () => {
-                    console.log("click edit data")
-                });
-                this.downloadPhoto.addEventListener("click", () => {
-                    console.log("click download photo")
-                });
-                this.showButton.addEventListener("click", () => {
-                    if (this.passwordInput.type==="password"){
-                        this.passwordInput.type="text"
-                    } else {
-                        this.passwordInput.type="password"
-                    }
-                });
-                this.showButton1.addEventListener("click", () => {
-                    if (this.passwordConfirmInput.type==="password"){
-                        this.passwordConfirmInput.type="text"
-                    } else {
-                        this.passwordConfirmInput.type="password"
-                    }
-                });
+        this.authButton.addEventListener("click", () => {
+            console.log("click edit data")
+        });
+        this.downloadPhoto.addEventListener("click", () => {
+            console.log("click download photo")
+        });
+        this.showButton.addEventListener("click", () => {
+            if (this.passwordInput.type==="password"){
+                this.passwordInput.type="text"
+            } else {
+                this.passwordInput.type="password"
+            }
+        });
+        this.showButton1.addEventListener("click", () => {
+            if (this.passwordConfirmInput.type==="password"){
+                this.passwordConfirmInput.type="text"
+            } else {
+                this.passwordConfirmInput.type="password"
+            }
+        });
     }
 
     update(event?: UIEvent) {

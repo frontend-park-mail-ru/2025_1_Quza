@@ -17,11 +17,10 @@ export class Controller {
     async handleEvent(event: ViewEvent) {
         switch (event.type) {
             case VIEW_EVENT_TYPE.LOGIN:
+                const data = event.data as { username: string; password: string };
                 await model.userModel.login(
-                    (<{ username: string; password: string }>event.data)
-                        .username,
-                    (<{ username: string; password: string }>event.data)
-                        .password,
+                    data.username,
+                    data.password,
                 );
                 break;
             case VIEW_EVENT_TYPE.AUTH:
@@ -40,10 +39,11 @@ export class Controller {
                 break;
             case VIEW_EVENT_TYPE.REGISTRATION:
                 try {
-                    await model.userModel.createUser(event.data as User);
+                    const data = event.data as User;
+                    await model.userModel.createUser(data);
                     model.userModel.login(
-                        (<User>event.data).Username,
-                        (<User>event.data).Password,
+                        data.Username,
+                        data.Password,
                     );
                 } catch (e) {
                     console.error("Неудачная регистрация");
